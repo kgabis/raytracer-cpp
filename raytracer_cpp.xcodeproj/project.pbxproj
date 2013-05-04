@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		EE8B0743172D94EE00CCE082 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE8B0742172D94EE00CCE082 /* main.cpp */; };
 		EE8B0745172D94EE00CCE082 /* raytracer_cpp.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */; };
+		EED71998172EC60400361A3B /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED71996172EC60400361A3B /* Geometry.cpp */; };
+		EED7199B172ECA7B00361A3B /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED71999172ECA7B00361A3B /* Ray.cpp */; };
+		EED7199E172ECB4F00361A3B /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED7199C172ECB4F00361A3B /* Color.cpp */; };
+		EEDF082B17351E8B009A22BB /* Raytracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDF082917351E8B009A22BB /* Raytracer.cpp */; };
+		EEDF082E17353915009A22BB /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDF082C17353915009A22BB /* Scene.cpp */; };
+		EEF7B465173555EF0031317F /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B463173555EF0031317F /* Camera.cpp */; };
+		EEF7B46B1735560C0031317F /* Surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B4691735560C0031317F /* Surface.cpp */; };
+		EEF7B46E173556110031317F /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46C173556110031317F /* Material.cpp */; };
+		EEF7B471173556160031317F /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46F173556160031317F /* Light.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +37,24 @@
 		EE8B073F172D94EE00CCE082 /* raytracer_cpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = raytracer_cpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE8B0742172D94EE00CCE082 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = raytracer_cpp.1; sourceTree = "<group>"; };
+		EED71996172EC60400361A3B /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
+		EED71997172EC60400361A3B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
+		EED71999172ECA7B00361A3B /* Ray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ray.cpp; sourceTree = "<group>"; };
+		EED7199A172ECA7B00361A3B /* Ray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ray.h; sourceTree = "<group>"; };
+		EED7199C172ECB4F00361A3B /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
+		EED7199D172ECB4F00361A3B /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		EEDF082917351E8B009A22BB /* Raytracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Raytracer.cpp; sourceTree = "<group>"; };
+		EEDF082A17351E8B009A22BB /* Raytracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raytracer.h; sourceTree = "<group>"; };
+		EEDF082C17353915009A22BB /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
+		EEDF082D17353915009A22BB /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		EEF7B463173555EF0031317F /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		EEF7B464173555EF0031317F /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		EEF7B4691735560C0031317F /* Surface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Surface.cpp; sourceTree = "<group>"; };
+		EEF7B46A1735560C0031317F /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surface.h; sourceTree = "<group>"; };
+		EEF7B46C173556110031317F /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		EEF7B46D173556110031317F /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
+		EEF7B46F173556160031317F /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
+		EEF7B470173556160031317F /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +89,24 @@
 			children = (
 				EE8B0742172D94EE00CCE082 /* main.cpp */,
 				EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */,
+				EED71996172EC60400361A3B /* Geometry.cpp */,
+				EED71997172EC60400361A3B /* Geometry.h */,
+				EEF7B4691735560C0031317F /* Surface.cpp */,
+				EEF7B46A1735560C0031317F /* Surface.h */,
+				EEF7B46C173556110031317F /* Material.cpp */,
+				EEF7B46D173556110031317F /* Material.h */,
+				EEF7B46F173556160031317F /* Light.cpp */,
+				EEF7B470173556160031317F /* Light.h */,
+				EEF7B463173555EF0031317F /* Camera.cpp */,
+				EEF7B464173555EF0031317F /* Camera.h */,
+				EED71999172ECA7B00361A3B /* Ray.cpp */,
+				EED7199A172ECA7B00361A3B /* Ray.h */,
+				EED7199C172ECB4F00361A3B /* Color.cpp */,
+				EED7199D172ECB4F00361A3B /* Color.h */,
+				EEDF082917351E8B009A22BB /* Raytracer.cpp */,
+				EEDF082A17351E8B009A22BB /* Raytracer.h */,
+				EEDF082C17353915009A22BB /* Scene.cpp */,
+				EEDF082D17353915009A22BB /* Scene.h */,
 			);
 			path = raytracer_cpp;
 			sourceTree = "<group>";
@@ -118,6 +163,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE8B0743172D94EE00CCE082 /* main.cpp in Sources */,
+				EED71998172EC60400361A3B /* Geometry.cpp in Sources */,
+				EED7199B172ECA7B00361A3B /* Ray.cpp in Sources */,
+				EED7199E172ECB4F00361A3B /* Color.cpp in Sources */,
+				EEDF082B17351E8B009A22BB /* Raytracer.cpp in Sources */,
+				EEDF082E17353915009A22BB /* Scene.cpp in Sources */,
+				EEF7B465173555EF0031317F /* Camera.cpp in Sources */,
+				EEF7B46B1735560C0031317F /* Surface.cpp in Sources */,
+				EEF7B46E173556110031317F /* Material.cpp in Sources */,
+				EEF7B471173556160031317F /* Light.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +238,14 @@
 		EE8B0749172D94EE00CCE082 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lsfml-graphics",
+					"-lsfml-system",
+					"-lsfml-window",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -191,6 +253,14 @@
 		EE8B074A172D94EE00CCE082 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lsfml-graphics",
+					"-lsfml-system",
+					"-lsfml-window",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -214,6 +284,7 @@
 				EE8B074A172D94EE00CCE082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
