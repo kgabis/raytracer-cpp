@@ -10,5 +10,17 @@
 #define __raytracer_cpp__Material__
 
 #include <iostream>
+#include "Color.h"
+
+class Material {
+public:
+    Color color;
+    float reflectivity;
+    float specularity;
+    float reflectionNoise;
+    
+    Material();
+    Material(Color color, float reflectivity, float reflectionNoise, float specularity);
+};
 
 #endif /* defined(__raytracer_cpp__Material__) */

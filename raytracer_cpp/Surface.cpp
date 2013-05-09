@@ -7,3 +7,13 @@
 //
 
 #include "Surface.h"
+#include "Ray.h"
+
+Surface::Surface(Geometry *geometry, Material material) {
+    this->geometry = geometry;
+    this->material = material;
+}
+
+Surface::~Surface() {
+//    delete this->geometry;
+}

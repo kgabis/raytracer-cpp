@@ -11,17 +11,19 @@
 
 #include <iostream>
 #include "Color.h"
+#include "Scene.h"
 
-typedef void (*DrawFunction)(void *data, Color color, size_t x, size_t y);
+typedef void ( *DrawFunction )( void *data, Color color, size_t x, size_t y );
 
 class Raytracer {
 public:
-    //Scene scene;
+    Scene scene;
     size_t resolutionX;
     size_t resolutionY;
     
-    Raytracer(size_t resolutionX, size_t resolutionY);
-    void Render(DrawFunction drawFunction, void *data) const;
+    Raytracer( size_t resolutionX, size_t resolutionY );
+    
+    void Render( DrawFunction drawFunction, void *data );
     ~Raytracer();
 };
 

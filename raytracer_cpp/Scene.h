@@ -25,7 +25,8 @@ public:
     Camera camera;
     Color backgroundColor;
     
-    Scene(size_t cameraWidth, size_t cameraHeight);
+    Scene();
+    Scene( size_t cameraWidth, size_t cameraHeight );
     void LoadSpheresDemo();
     ~Scene();
 };

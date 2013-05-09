@@ -19,7 +19,6 @@
 static void draw(void *data, Color color, size_t x, size_t y) {
     sf::Image *screen = (sf::Image*)data;
     sf::Color sfcolor;
-    sfcolor.
     sfcolor.r = (sf::Uint8)(color.r * 255.0);
     sfcolor.g = (sf::Uint8)(color.g * 255.0);
     sfcolor.b = (sf::Uint8)(color.b * 255.0);
@@ -41,6 +40,7 @@ int main() {
     sf::Clock clock;
     sf::Time time;
     sprite.setTexture(texture);
+    raytracer.scene.LoadSpheresDemo();
     while (window.isOpen()) {
         clock.restart();
         screen.create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color::White);

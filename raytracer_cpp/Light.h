@@ -10,5 +10,18 @@
 #define __raytracer_cpp__Light__
 
 #include <iostream>
+#include <glm/glm.hpp>
+
+class Light {
+public:
+    glm::vec3 position;
+    float intensity;
+    
+    Light( glm::vec3 position, float intensity );
+    
+    glm::vec3 GetDirectionAtPoint( glm::vec3 point ) const;
+    float GetDiffusedHighlight   ( glm::vec3 direction, glm::vec3 normal ) const;
+    float GetSpecularHighlight   ( glm::vec3 direction, glm::vec3 normal, glm::vec3 rayDirection, float specularity ) const;
+};
 
 #endif /* defined(__raytracer_cpp__Light__) */

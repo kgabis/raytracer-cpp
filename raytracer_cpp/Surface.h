@@ -13,13 +13,15 @@
 #include "Geometry.h"
 #include "Material.h"
 
+class Ray;
+
 class Surface {
 public:
     Geometry *geometry;
     Material material;
     
-    
-    
+    Surface(Geometry *geometry, Material material);
+    ~Surface();
 };
 
 #endif /* defined(__raytracer_cpp__Surface__) */
