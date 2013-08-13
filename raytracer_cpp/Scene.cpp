@@ -9,12 +9,12 @@
 #include "Scene.h"
 #include <glm/glm.hpp>
 
-Scene::Scene() : Scene( 0, 0 ) { }
+Scene::Scene() : Scene(0, 0) { }
 
-Scene::Scene( size_t cameraWidth, size_t cameraHeight ) {
-    this->camera = Camera( glm::vec3( 0, 0, -10 ), glm::vec3( 0, 0, 1 ),
-                           430, cameraWidth, cameraHeight );
-    this->ambientCoefficient = 0.6;
+Scene::Scene(size_t cameraWidth, size_t cameraHeight) {
+    this->camera = Camera(glm::vec3(0, 0, -10), glm::vec3(0, 0, 1),
+                           430, cameraWidth, cameraHeight);
+    this->ambientCoefficient = 0.3;
     this->backgroundColor = Color::Blue;
 }
 /*void scene_loadSpheresDemo(Scene *scene) {
@@ -76,21 +76,22 @@ Scene::Scene( size_t cameraWidth, size_t cameraHeight ) {
 }*/
 
 void Scene::LoadSpheresDemo() {
-    Material materialRed( Color::Red, 0.0f, 0.0f, 40.0f );
-    Material materialGreen( Color::Green, 0.0f, 0.0f, 40.0f );
-    Sphere *redSpehre = new Sphere( glm::vec3( 0.0f, 0.0f, 20.0f ), 20.0f );
-    Sphere *greenSpehre = new Sphere( glm::vec3( 5.0f, 5.0f, 10.0f ), 10.0f );
+    Material materialRed(Color::Red, 0, 0, 40);
+    Material materialGreen(Color::Green, 0, 0, 40);
+    Sphere *redSpehre = new Sphere(glm::vec3(20, 20, 50), 10);
+    Sphere *greenSpehre = new Sphere(glm::vec3(0, 0, 20), 5);
     glm::vec3 vs[10];
-    vs[0] = glm::vec3( -10.0f, -10.0f, 30.0f );
-    vs[1] = glm::vec3( -10.0f, 30.0f,  30.0f );
-    vs[2] = glm::vec3( 20.0f, -10.0f, 30.0f );
-    this->surfaces.push_back( Surface(redSpehre, materialRed) );
-    this->surfaces.push_back( Surface(greenSpehre, materialGreen) );
-    this->lights.push_back( Light( glm::vec3( 10.0f, 10.0f, -20.0f ), 1.0f ) );
-    Triangle *triangle = new Triangle(vs[0], vs[1], vs[2]);
-    this->surfaces.push_back( Surface(triangle, materialRed ));
-
-
+    vs[0] = glm::vec3(-50, -50, 70);
+    vs[1] = glm::vec3(-50, 50,  70);
+    vs[2] = glm::vec3(50, -50, 70);
+    vs[3] = glm::vec3(50, 50, 70);
+    this->surfaces.push_back(Surface(redSpehre, materialRed));
+    this->surfaces.push_back(Surface(greenSpehre, materialGreen));
+    this->lights.push_back(Light(glm::vec3(10, 10, -10), 1));
+    Triangle *t1 = new Triangle(vs[2], vs[1], vs[0]);
+    Triangle *t2 = new Triangle(vs[2], vs[3], vs[1]);
+    this->surfaces.push_back(Surface(t1, materialRed));
+    this->surfaces.push_back(Surface(t2, materialGreen));
 }
 
 Scene::~Scene() {

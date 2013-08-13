@@ -2,7 +2,7 @@
 //  Ray.cpp
 //  raytracer_cpp
 //
-//  Created by Krzysztof Gabis on 29.04.2013.
+//  Created by Krzysztof Gabis on 294.2013.
 //  Copyright (c) 2013 Krzysztof Gabis. All rights reserved.
 //
 
@@ -12,12 +12,12 @@
 #include "Scene.h"
 
 #define MAX_RECURSION_DEPTH 4
-#define MAX_VISIBLE_DISTANCE 600.0
-#define EPSILON 0.000001
+#define MAX_VISIBLE_DISTANCE 600
+#define EPSILON 000001
 
 Ray::Ray() {
-    this->origin = glm::vec3( 0.0f, 0.0f, 0.0f );
-    this->direction = glm::vec3( 0.0f, 0.0f, 0.0f );
+    this->origin = glm::vec3(0, 0, 0);
+    this->direction = glm::vec3(0, 0, 0);
 }
 
 Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
@@ -26,10 +26,10 @@ Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
 }
 
 Ray::Ray(const Camera &camera, size_t x, size_t y) {
-    float dy = 1.0;
-    float dx = 1.0;
-    float py = (- camera.height / 2.0) + dy * ((float)y + 0.5);
-    float px = (- camera.width / 2.0) + dx * ((float)x + 0.5);
+    float dy = 1;
+    float dx = 1;
+    float py = (- camera.height / 2) + dy * ((float)y + 0.5);
+    float px = (- camera.width / 2) + dx * ((float)x + 0.5);
     glm::vec3 p = camera.planeCenter + (camera.planeDirectionX * px) + (camera.planeDirectionY * py);
     glm::vec3 u_r = glm::normalize(p - camera.position);
     this->origin = camera.position;
@@ -50,54 +50,65 @@ Ray Ray::Reflect(const Surface &surface, glm::vec3 collisionPoint) const {
 Color Ray::TraceRecursive(const Scene &scene, size_t depth) const {
     TracingResult closestHit = this->TraceOnce(scene);
     if (!closestHit.hit) {
-        return closestHit.color;
+        return scene.backgroundColor;
     }
+    Color closestHitColor = closestHit.surface->material.color;
     glm::vec3 collisionPoint = (this->direction * closestHit.distance) + this->origin;
     const Material *material = &closestHit.surface->material;
-    if (material->reflectivity > 0.0 && depth > 0) {
+    if (material->reflectivity > 0 && depth > 0) {
         Ray reflectedRay = this->Reflect(*closestHit.surface, collisionPoint);
         Color reflectionColor = reflectedRay.TraceRecursive(scene, depth - 1);
-        closestHit.color = reflectionColor.Blend(closestHit.color, material->reflectivity);
+        closestHitColor = reflectionColor.Blend(closestHitColor, material->reflectivity);
     }
     ShadingResult shadingResult = this->ShadeAtPoint(scene, *closestHit.surface, collisionPoint);
-    closestHit.color = closestHit.color.GetHighlighted(shadingResult.diffused, shadingResult.specular, scene.ambientCoefficient);
-    closestHit.color = closestHit.color.Multiply((MAX_VISIBLE_DISTANCE - closestHit.distance) / MAX_VISIBLE_DISTANCE);
-    return closestHit.color;    
+    closestHitColor = closestHitColor.GetHighlighted(shadingResult.diffused, shadingResult.specular, scene.ambientCoefficient);
+    closestHitColor = closestHitColor.Multiply((MAX_VISIBLE_DISTANCE - closestHit.distance) / MAX_VISIBLE_DISTANCE);
+    return closestHitColor;
 }
 
 TracingResult Ray::TraceOnce(const Scene &scene) const {
-    TracingResult closestHit;
-    closestHit.hit = 0;
-    closestHit.color = scene.backgroundColor;
-    closestHit.distance = 1.0 / 0.0; // infinity
-    bool isHit;
-    float distance = 0.0f;
-    for( auto &s : scene.surfaces ) {
+    TracingResult closestHit = { .hit = false, .distance = static_cast<float>(1.0 / 0.0) };
+    TracingResult currentHit = { .hit = false, .distance = 0 };
+    for (auto &s : scene.surfaces) {
         Geometry *geometry = s.geometry;
-        Ray ray(this->origin, this->direction);
-        isHit = geometry->CheckIntersection(ray, distance);
-        if (isHit && distance < closestHit.distance) {
+        currentHit.hit = geometry->CheckIntersection(*this, &currentHit.distance);
+        if (currentHit.hit && currentHit.distance < closestHit.distance) {
             closestHit.hit = true;
-            closestHit.distance = distance;
+            closestHit.distance = currentHit.distance;
             closestHit.surface = &s;
-            closestHit.color = s.material.color;
         }
     }
     return closestHit;
 }
 
-ShadingResult Ray::ShadeAtPoint( const Scene &scene, const Surface &surface, glm::vec3 point ) const {
-    ShadingResult shadingResult = { .diffused = 0.0f, .specular = 0.0f };
+bool Ray::TraceForShadow(const Scene &scene, const Surface &surfaceToExclude, float lightDistance) const {
+    TracingResult currentTrace;
+    for (auto &s : scene.surfaces) {
+        if (&s == &surfaceToExclude) {
+            continue;
+        }
+        const Geometry *g = s.geometry;
+        currentTrace.hit = g->CheckIntersection(*this, &currentTrace.distance);
+        if (currentTrace.hit && currentTrace.distance < lightDistance) {
+            return true;
+        }
+    }
+    return false;    
+}
+
+ShadingResult Ray::ShadeAtPoint(const Scene &scene, const Surface &surface, glm::vec3 point) const {
+    ShadingResult shadingResult = { .diffused = 0, .specular = 0 };
     float lightDistance;
     glm::vec3 lightDirection;
     Ray newRay;
-    TracingResult shadowTracingResult;
-    for ( auto &light : scene.lights ) {
+    bool isInShadow = false;
+    for (auto &light : scene.lights) {
         lightDirection = light.GetDirectionAtPoint(point);
+        newRay.origin = point;
         newRay.direction = -lightDirection;
-        lightDistance = glm::length(light.position - point);
-        shadowTracingResult = newRay.TraceOnce(scene);
-        if ( !shadowTracingResult.hit || shadowTracingResult.distance > lightDistance ) {
+        lightDistance = glm::length(point - light.position);
+        isInShadow = newRay.TraceForShadow(scene, surface, lightDistance);
+        if (!isInShadow) {
             glm::vec3 normal = surface.geometry->GetNormalAtPoint(point);
             shadingResult.diffused += light.GetDiffusedHighlight(lightDirection, normal);
             shadingResult.specular += light.GetSpecularHighlight(lightDirection, normal, this->direction, surface.material.specularity);
@@ -105,3 +116,10 @@ ShadingResult Ray::ShadeAtPoint( const Scene &scene, const Surface &surface, glm
     }
     return shadingResult;
 }
+
+void Ray::print() const {
+    printf("{{%.2f %.2f %.2f}, {%.2f %.2f %.2f}}\n",
+           this->origin.x, this->origin.y, this->origin.z,
+           this->direction.x, this->direction.y, this->direction.z);
+}
+

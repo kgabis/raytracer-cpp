@@ -24,6 +24,8 @@ public:
     
     Camera();
     Camera(glm::vec3 position, glm::vec3 direction, float focalLength, float width, float height);
+    void moveForwardBackwards(float distance);
+    void moveLeftRight(float left);
     void Update();
 };
 

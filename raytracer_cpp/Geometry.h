@@ -16,7 +16,7 @@ class Ray;
 
 class Geometry {
 public:
-    virtual bool CheckIntersection(const Ray &ray, float &distance) const = 0;
+    virtual bool CheckIntersection(const Ray &ray, float *distance) const = 0;
     virtual glm::vec3 GetNormalAtPoint(const glm::vec3 &point) const = 0;
     virtual ~Geometry() { printf("Destroyed!\n"); }
 };
@@ -26,7 +26,7 @@ class Sphere : public Geometry {
     double radius;
 public:
     Sphere(glm::vec3 center, double radius);
-    virtual bool CheckIntersection(const Ray &ray, float &distance) const;
+    virtual bool CheckIntersection(const Ray &ray, float *distance) const;
     virtual glm::vec3 GetNormalAtPoint(const glm::vec3 &point) const;
     virtual ~Sphere() = default;
 };
@@ -37,7 +37,7 @@ public:
     glm::vec3 edges[2];
     glm::vec3 normal;
     Triangle(glm::vec3 a, glm::vec3 b, glm::vec3 c);
-    virtual bool CheckIntersection(const Ray &ray, float &distance) const;
+    virtual bool CheckIntersection(const Ray &ray, float *distance) const;
     virtual glm::vec3 GetNormalAtPoint(const glm::vec3 &point) const;
     virtual ~Triangle() = default;
 };

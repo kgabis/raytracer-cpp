@@ -20,7 +20,6 @@ class Surface;
 
 typedef struct {
     bool hit;
-    Color color;
     const Surface *surface;
     float distance;
 } TracingResult;
@@ -36,15 +35,17 @@ public:
     glm::vec3 direction;
     
     Ray();
-    Ray( glm::vec3 origin, glm::vec3 direction );
-    Ray( const Camera &camera, size_t x, size_t y );
+    Ray(glm::vec3 origin, glm::vec3 direction);
+    Ray(const Camera &camera, size_t x, size_t y);
     
-    Color Trace( const Scene &scene ) const;
+    Color Trace(const Scene &scene) const;
+    void print() const;
     
 private:
     Ray Reflect(const Surface &surface, glm::vec3 collisionPoint) const;
     Color TraceRecursive(const Scene &scene, size_t depth) const;
     TracingResult TraceOnce(const Scene &scene) const;
+    bool TraceForShadow(const Scene &scene, const Surface &surfaceToExclude, float lightDistance) const;
     ShadingResult ShadeAtPoint(const Scene &scene, const Surface &surface, glm::vec3 point) const;
 };
 

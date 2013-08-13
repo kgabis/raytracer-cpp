@@ -14,7 +14,7 @@ Sphere::Sphere( glm::vec3 center, double radius ) {
     this->radius = radius;
 }
 
-bool Sphere::CheckIntersection( const Ray &ray, float &distance ) const {
+bool Sphere::CheckIntersection( const Ray &ray, float *distance ) const {
     glm::vec3 EO = this->center - ray.origin;
     float v = glm::dot( EO, ray.direction );
     if ( v < 0.0f ) {
@@ -26,7 +26,7 @@ bool Sphere::CheckIntersection( const Ray &ray, float &distance ) const {
         return false;
     }
     float d = std::sqrt( disc );
-    distance = std::min( v - d, v + d );
+    *distance = std::min( v - d, v + d );
     return true;
 }
 
@@ -43,7 +43,7 @@ Triangle::Triangle( glm::vec3 a, glm::vec3 b, glm::vec3 c ) {
     this->normal = glm::normalize( glm::cross( b - a, c - a ) );
 }
 
-bool Triangle::CheckIntersection( const Ray &ray, float &distance ) const {
+bool Triangle::CheckIntersection( const Ray &ray, float *distance ) const {
     glm::vec3 pvec = glm::cross( ray.direction, this->edges[0] );
     float det = glm::dot( this->edges[1], pvec );
     float const epsilon = 0.000001f;
@@ -63,7 +63,7 @@ bool Triangle::CheckIntersection( const Ray &ray, float &distance ) const {
     float d = glm::dot(this->edges[0], qvec);
     float inv_det = 1.0f / det;
     d *= inv_det;
-    distance = d;
+    *distance = d;
     return true;
 }
 
