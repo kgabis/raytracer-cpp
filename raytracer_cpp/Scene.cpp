@@ -87,7 +87,7 @@ void Scene::LoadSpheresDemo() {
     vs[3] = glm::vec3(50, 50, 70);
     this->surfaces.push_back(Surface(redSpehre, materialRed));
     this->surfaces.push_back(Surface(greenSpehre, materialGreen));
-    this->lights.push_back(Light(glm::vec3(10, 10, -10), 1));
+    this->lights.push_back(Light(camera.position, 1));
     Triangle *t1 = new Triangle(vs[2], vs[1], vs[0]);
     Triangle *t2 = new Triangle(vs[2], vs[3], vs[1]);
     this->surfaces.push_back(Surface(t1, materialRed));

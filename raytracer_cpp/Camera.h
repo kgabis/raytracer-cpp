@@ -9,23 +9,28 @@
 #ifndef __raytracer_cpp__Camera__
 #define __raytracer_cpp__Camera__
 
-#include <glm/glm.hpp>
+#include "global.h"
 
 class Camera {
 public:
-    glm::vec3 position;
-    glm::vec3 direction;
-    glm::vec3 planeCenter;
-    glm::vec3 planeDirectionX;
-    glm::vec3 planeDirectionY;
+    vec3 position;
+    vec3 direction;
+    vec3 up;
+    vec3 planeCenter;
+    vec3 planeDirectionX;
+    vec3 planeDirectionY;
     float focalLength;
     float width;
     float height;
     
     Camera();
-    Camera(glm::vec3 position, glm::vec3 direction, float focalLength, float width, float height);
-    void moveForwardBackwards(float distance);
-    void moveLeftRight(float left);
+    Camera(vec3 position, vec3 direction, float focalLength, float width, float height);
+    void moveForward(float distance);
+    void moveBackwards(float distance);
+    void moveRight(float distance);
+    void moveLeft(float distance);
+    void moveUp(float distance);
+    void moveDown(float distance);
     void Update();
 };
 

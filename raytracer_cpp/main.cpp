@@ -13,8 +13,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+#define WINDOW_WIDTH 200
+#define WINDOW_HEIGHT 200
+
+static void moveCamera(Camera *camera, const sf::Event &event);
 
 static void draw(void *data, Color color, size_t x, size_t y) {
     sf::Image *screen = (sf::Image*)data;
@@ -30,7 +32,7 @@ int main() {
     Raytracer raytracer(WINDOW_WIDTH, WINDOW_HEIGHT);
     sf::VideoMode mode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);
     sf::IntRect bounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    sf::RenderWindow window(mode, "raytracer");
+    sf::RenderWindow window(mode, "RayTracerCxx");
     sf::Event event;
     sf::Image screen;
     screen.create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color::White);
@@ -47,7 +49,9 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
-            }
+            } else {
+                moveCamera(&raytracer.scene.camera, event);
+            }            
         }
         raytracer.Render(draw, &screen);
         texture.loadFromImage(screen);
@@ -58,5 +62,28 @@ int main() {
         
         time = clock.getElapsedTime();
         printf("Seconds per frame: %f\n", time.asSeconds());
+    }
+}
+
+static void moveCamera(Camera *camera, const sf::Event &event) {
+    const float moveSpeed = 1;
+    const auto &code = event.key.code;
+    if (code == sf::Keyboard::W) {
+        camera->moveForward(moveSpeed);
+    }
+    if (code == sf::Keyboard::S) {
+        camera->moveBackwards(moveSpeed);
+    }
+    if (code == sf::Keyboard::A) {
+        camera->moveLeft(moveSpeed);
+    }
+    if (code == sf::Keyboard::D) {
+        camera->moveRight(moveSpeed);
+    }
+    if (code == sf::Keyboard::E) {
+        camera->moveUp(moveSpeed);
+    }
+    if (code == sf::Keyboard::C) {
+        camera->moveDown(moveSpeed);
     }
 }

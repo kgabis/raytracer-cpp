@@ -37,6 +37,7 @@
 		EE8B073F172D94EE00CCE082 /* raytracer_cpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = raytracer_cpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE8B0742172D94EE00CCE082 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = raytracer_cpp.1; sourceTree = "<group>"; };
+		EEAB9DE917BE178900F6B258 /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
 		EED71996172EC60400361A3B /* Geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geometry.cpp; sourceTree = "<group>"; };
 		EED71997172EC60400361A3B /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
 		EED71999172ECA7B00361A3B /* Ray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ray.cpp; sourceTree = "<group>"; };
@@ -87,28 +88,45 @@
 		EE8B0741172D94EE00CCE082 /* raytracer_cpp */ = {
 			isa = PBXGroup;
 			children = (
-				EE8B0742172D94EE00CCE082 /* main.cpp */,
+				EEAB9DEA17BE179200F6B258 /* Source */,
+				EEAB9DE817BE176B00F6B258 /* Header */,
 				EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */,
-				EED71996172EC60400361A3B /* Geometry.cpp */,
-				EED71997172EC60400361A3B /* Geometry.h */,
-				EEF7B4691735560C0031317F /* Surface.cpp */,
-				EEF7B46A1735560C0031317F /* Surface.h */,
-				EEF7B46C173556110031317F /* Material.cpp */,
-				EEF7B46D173556110031317F /* Material.h */,
-				EEF7B46F173556160031317F /* Light.cpp */,
-				EEF7B470173556160031317F /* Light.h */,
-				EEF7B463173555EF0031317F /* Camera.cpp */,
-				EEF7B464173555EF0031317F /* Camera.h */,
-				EED71999172ECA7B00361A3B /* Ray.cpp */,
-				EED7199A172ECA7B00361A3B /* Ray.h */,
-				EED7199C172ECB4F00361A3B /* Color.cpp */,
-				EED7199D172ECB4F00361A3B /* Color.h */,
-				EEDF082917351E8B009A22BB /* Raytracer.cpp */,
-				EEDF082A17351E8B009A22BB /* Raytracer.h */,
-				EEDF082C17353915009A22BB /* Scene.cpp */,
-				EEDF082D17353915009A22BB /* Scene.h */,
 			);
 			path = raytracer_cpp;
+			sourceTree = "<group>";
+		};
+		EEAB9DE817BE176B00F6B258 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				EED71997172EC60400361A3B /* Geometry.h */,
+				EEF7B46A1735560C0031317F /* Surface.h */,
+				EEF7B46D173556110031317F /* Material.h */,
+				EEF7B470173556160031317F /* Light.h */,
+				EEF7B464173555EF0031317F /* Camera.h */,
+				EED7199A172ECA7B00361A3B /* Ray.h */,
+				EED7199D172ECB4F00361A3B /* Color.h */,
+				EEDF082A17351E8B009A22BB /* Raytracer.h */,
+				EEDF082D17353915009A22BB /* Scene.h */,
+				EEAB9DE917BE178900F6B258 /* global.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
+		EEAB9DEA17BE179200F6B258 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				EE8B0742172D94EE00CCE082 /* main.cpp */,
+				EED71996172EC60400361A3B /* Geometry.cpp */,
+				EEF7B4691735560C0031317F /* Surface.cpp */,
+				EEF7B46C173556110031317F /* Material.cpp */,
+				EEF7B46F173556160031317F /* Light.cpp */,
+				EEF7B463173555EF0031317F /* Camera.cpp */,
+				EED71999172ECA7B00361A3B /* Ray.cpp */,
+				EED7199C172ECB4F00361A3B /* Color.cpp */,
+				EEDF082917351E8B009A22BB /* Raytracer.cpp */,
+				EEDF082C17353915009A22BB /* Scene.cpp */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
