@@ -7,6 +7,11 @@
 //
 
 #include "Camera.h"
+#include <glm/gtx/rotate_vector.hpp>
+
+static const float LOOK_SCALING = 3.0;
+
+typedef glm::vec3 vec3;
 
 Camera::Camera() { }
 
@@ -14,7 +19,7 @@ Camera::Camera(vec3 position, vec3 direction, float focalLength, float width, fl
     this->position = position;
     this->direction = glm::normalize(direction);
     this->focalLength = focalLength;
-    this->up = vec3(0, 1, 0);
+    this->up = vec3(0.0f, 1.0f, 0.0f);
     this->width = width;
     this->height = height;
     this->Update();
@@ -43,6 +48,24 @@ void Camera::moveUp(float distance) {
 
 void Camera::moveDown(float distance) {
     moveUp(-distance);
+}
+
+void Camera::lookUp(float degrees) {
+    vec3 right = glm::cross(this->direction, this->up);
+    this->direction = glm::rotate(this->direction, -degrees * LOOK_SCALING, right);
+}
+
+void Camera::lookDown(float degrees) {
+    vec3 right = glm::cross(this->direction, this->up);
+    this->direction = glm::rotate(this->direction, degrees * LOOK_SCALING, right);
+}
+
+void Camera::lookLeft(float degrees) {
+    this->direction = glm::rotate(this->direction, degrees * LOOK_SCALING, this->up);
+}
+
+void Camera::lookRight(float degrees) {
+    this->direction = glm::rotate(this->direction, -degrees * LOOK_SCALING, this->up);
 }
 
 void Camera::Update() {

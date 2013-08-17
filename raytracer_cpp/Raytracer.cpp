@@ -17,7 +17,6 @@ Raytracer::Raytracer(size_t resolutionX, size_t resolutionY) {
 
 void Raytracer::Render(DrawFunction drawFunction, void *data) {
     this->scene.camera.Update();
-    this->scene.lights[0].position = this->scene.camera.position - glm::vec3(-5, -5, -5);
     for (size_t x = 0; x < this->resolutionX; x++) {
         for (size_t y = 0; y < this->resolutionY; y++) {
             Ray ray(this->scene.camera, x, y);

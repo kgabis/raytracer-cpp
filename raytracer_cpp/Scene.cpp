@@ -12,7 +12,7 @@
 Scene::Scene() : Scene(0, 0) { }
 
 Scene::Scene(size_t cameraWidth, size_t cameraHeight) {
-    this->camera = Camera(glm::vec3(0, 0, -10), glm::vec3(0, 0, 1),
+    this->camera = Camera(glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 0.0f, 1.0f),
                            430, cameraWidth, cameraHeight);
     this->ambientCoefficient = 0.3;
     this->backgroundColor = Color::Blue;

@@ -9,7 +9,7 @@
 #include "Color.h"
 #include <algorithm>
 
-Color::Color() : Color( 1.0, 1.0, 1.0 ) { }
+Color::Color() : Color( 1.0f, 1.0f, 1.0f ) { }
 
 Color::Color( double r, double g, double b ) {
     this->r = std::min(r, 1.0);

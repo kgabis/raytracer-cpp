@@ -11,10 +11,12 @@
 #include "Color.h"
 //#include <SFML/Graphics/Sprite.h>
 #include <stdio.h>
+#include <iostream>
 #include <string.h>
+#include <glm/ext.hpp>
 
-#define WINDOW_WIDTH 200
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 400
+#define WINDOW_HEIGHT 400
 
 static void moveCamera(Camera *camera, const sf::Event &event);
 
@@ -29,6 +31,14 @@ static void draw(void *data, Color color, size_t x, size_t y) {
 }
 
 int main() {
+//    glm::dvec3 dvec(1.0, 2.0, 3.0);
+//    glm::vec3 fvec(1.0f, 2.0f, 3.0f);
+//    glm::ivec3 ivec(1, 2, 3);
+//    size_t dvecs = sizeof(dvec.x);
+//    size_t fvecs = sizeof(fvec.x);
+//    size_t ivecs = sizeof(ivec.x);
+//    printf("%zu %zu %zu\n", dvecs, fvecs, ivecs);
+//    return 0;
     Raytracer raytracer(WINDOW_WIDTH, WINDOW_HEIGHT);
     sf::VideoMode mode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);
     sf::IntRect bounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -61,29 +71,22 @@ int main() {
         window.display();
         
         time = clock.getElapsedTime();
-        printf("Seconds per frame: %f\n", time.asSeconds());
+//        printf("Seconds per frame: %f\n", time.asSeconds());
     }
 }
 
 static void moveCamera(Camera *camera, const sf::Event &event) {
     const float moveSpeed = 1;
-    const auto &code = event.key.code;
-    if (code == sf::Keyboard::W) {
-        camera->moveForward(moveSpeed);
-    }
-    if (code == sf::Keyboard::S) {
-        camera->moveBackwards(moveSpeed);
-    }
-    if (code == sf::Keyboard::A) {
-        camera->moveLeft(moveSpeed);
-    }
-    if (code == sf::Keyboard::D) {
-        camera->moveRight(moveSpeed);
-    }
-    if (code == sf::Keyboard::E) {
-        camera->moveUp(moveSpeed);
-    }
-    if (code == sf::Keyboard::C) {
-        camera->moveDown(moveSpeed);
-    }
+#define HANDLE_KEY(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ camera->fun(moveSpeed); }
+    HANDLE_KEY(W, moveForward)
+    HANDLE_KEY(S, moveBackwards)
+    HANDLE_KEY(A, moveLeft)
+    HANDLE_KEY(D, moveRight)
+    HANDLE_KEY(E, moveUp)
+    HANDLE_KEY(C, moveDown)
+    HANDLE_KEY(Up, lookUp)
+    HANDLE_KEY(Down, lookDown)
+    HANDLE_KEY(Left, lookLeft)
+    HANDLE_KEY(Right, lookRight)
+#undef HANDLE
 }

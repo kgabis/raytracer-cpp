@@ -257,8 +257,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
+				GCC_OPTIMIZATION_LEVEL = 3;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LLVM_LTO = YES;
 				OTHER_LDFLAGS = (
 					"-lsfml-graphics",
 					"-lsfml-system",
@@ -274,6 +276,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LLVM_LTO = YES;
 				OTHER_LDFLAGS = (
 					"-lsfml-graphics",
 					"-lsfml-system",
