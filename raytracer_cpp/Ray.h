@@ -13,16 +13,10 @@
 #include <glm/glm.hpp>
 
 #include "Color.h"
+#include "TracingResult.h"
 
 class Camera;
 class Scene;
-class Surface;
-
-typedef struct {
-    bool hit;
-    const Surface *surface;
-    float distance;
-} TracingResult;
 
 typedef struct {
     float diffused;
@@ -42,11 +36,11 @@ public:
     void print() const;
     
 private:
-    Ray Reflect(const Surface &surface, glm::vec3 collisionPoint) const;
+    Ray Reflect(const glm::vec3 &normal, const glm::vec3 &collisionPoint) const;
     Color TraceRecursive(const Scene &scene, size_t depth) const;
-    TracingResult TraceOnce(const Scene &scene) const;
-    bool TraceForShadow(const Scene &scene, const Surface &surfaceToExclude, float lightDistance) const;
-    ShadingResult ShadeAtPoint(const Scene &scene, const Surface &surface, glm::vec3 point) const;
+    void TraceOnce(const Scene &scene, TracingResult *result) const;
+    bool TraceForShadow(const Scene &scene, float lightDistance) const;
+    ShadingResult ShadeAtPoint(const Scene &scene, const TracingResult &tracingResult, glm::vec3 point) const;
 };
 
 #endif /* defined(__raytracer_cpp__Ray__) */

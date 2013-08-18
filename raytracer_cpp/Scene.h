@@ -9,25 +9,24 @@
 #ifndef __raytracer_cpp__Scene__
 #define __raytracer_cpp__Scene__
 
-#include <iostream>
 #include <vector>
 
-#include "Surface.h"
+#include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
 #include "Color.h"
 
 class Scene {
 public:
-    std::vector<Surface> surfaces;
+    std::vector<Mesh> meshes;
     std::vector<Light> lights;
     double ambientCoefficient;
     Camera camera;
     Color backgroundColor;
     
     Scene();
-    Scene( size_t cameraWidth, size_t cameraHeight );
-    void LoadSpheresDemo();
+    Scene(size_t cameraWidth, size_t cameraHeight);
+    void LoadDemo(void);
     ~Scene();
 };
 

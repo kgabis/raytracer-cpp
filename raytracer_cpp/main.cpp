@@ -5,6 +5,7 @@
 //  Created by Krzysztof Gabis on 31.03.2013.
 //  Copyright (c) 2013 Krzysztof Gabis. All rights reserved.
 //
+// 17.08.2013 11:40 avg time for 2 triangles and 2 spheres: 0.04
 
 #include <SFML/Graphics.hpp>
 #include "Raytracer.h"
@@ -52,7 +53,7 @@ int main() {
     sf::Clock clock;
     sf::Time time;
     sprite.setTexture(texture);
-    raytracer.scene.LoadSpheresDemo();
+    raytracer.scene.LoadDemo();
     while (window.isOpen()) {
         clock.restart();
         screen.create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color::White);
@@ -71,7 +72,7 @@ int main() {
         window.display();
         
         time = clock.getElapsedTime();
-//        printf("Seconds per frame: %f\n", time.asSeconds());
+        printf("Seconds per frame: %f\n", time.asSeconds());
     }
 }
 

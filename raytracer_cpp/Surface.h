@@ -9,19 +9,27 @@
 #ifndef __raytracer_cpp__Surface__
 #define __raytracer_cpp__Surface__
 
-#include <iostream>
-#include "Geometry.h"
+#include "Triangle.h"
+#include "Sphere.h"
 #include "Material.h"
 
-class Ray;
-
-class Surface {
-public:
-    Geometry *geometry;
+struct TriangleSurface {
+    Triangle triangle;
     Material material;
+    TriangleSurface(Triangle triangle, Material material) :
+                    triangle(triangle),
+                    material(material)
+    {}
     
-    Surface(Geometry *geometry, Material material);
-    ~Surface();
+};
+
+struct SphereSurface {
+    Sphere sphere;
+    Material material;
+    SphereSurface(Sphere sphere, Material material) :
+                    sphere(sphere),
+                    material(material)
+    {}
 };
 
 #endif /* defined(__raytracer_cpp__Surface__) */
