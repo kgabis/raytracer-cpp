@@ -11,6 +11,10 @@
 
 Color::Color() : Color(1.0f, 1.0f, 1.0f) { }
 
+Color::Color(int r, int g, int b) :
+       Color(r / 255.0, g / 255.0, b / 255.0)
+{ }
+
 Color::Color(double r, double g, double b) {
     this->r = std::min(r, 1.0);
     this->g = std::min(g, 1.0);
@@ -60,7 +64,8 @@ Color Color::GetHighlighted (float diffused, float specular, float ambientCoeff)
 
 const Color Color::White = Color(1.0, 1.0, 1.0);
 const Color Color::Black = Color(0.0, 0.0, 0.0);
-const Color Color::Red   = Color(1.0, 0.0, 0.0);
-const Color Color::Green = Color(0.0, 1.0, 0.0);
-const Color Color::Blue  = Color(0.0, 0.0, 1.0);
+const Color Color::Red   = Color(189, 42, 51);
+const Color Color::Green = Color(64, 129, 86);
+const Color Color::Blue  = Color(48, 55, 79);
+const Color Color::Yellow = Color(214, 170, 38);
 

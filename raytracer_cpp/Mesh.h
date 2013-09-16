@@ -20,15 +20,20 @@ class Ray;
 
 class Mesh {
 public:
-    Mesh(void);
-    void AddCube(glm::vec3 a, glm::vec3 b, const Material &material);
-    void AddTriangleWithMaterial(const Triangle &triangle, const Material &material);
+    Mesh(void) = default;
+    void AddCube(glm::vec3 a, glm::vec3 b);
+    void AddTriangleWithMaterial(Triangle *triangle, Material *material);
+    void AddTriangleWithMaterial(const glm::vec3 &v1,
+                                 const glm::vec3 &v2,
+                                 const glm::vec3 &v3,
+                                 Material *m);
+    void Rotate(glm::vec3 axis, float deg);
     void FindIntersectionInRange(const Ray &ray, TracingResult *tracingResult, float range) const;
     void FindIntersection(const Ray &ray, TracingResult *tracingResult) const;
     ~Mesh(void) = default;
 private:
-    std::vector<std::pair<Triangle, const Material *>> _triangleMaterialPairs;
-    std::vector<Material> _materials;
+    std::vector<std::pair<Triangle*, Material*>> _triangleMaterialPairs;
+//    std::vector<Material> _materials;
 };
 
 #endif /* defined(__raytracer_cpp__Mesh__) */

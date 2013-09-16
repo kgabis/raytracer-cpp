@@ -27,6 +27,7 @@ public:
     Scene();
     Scene(size_t cameraWidth, size_t cameraHeight);
     void LoadDemo(void);
+    void test_RotateCube(void);
     ~Scene();
 };
 

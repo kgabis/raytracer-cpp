@@ -16,6 +16,7 @@ public:
     double r, g, b;
     
     Color();
+    Color(int r, int g, int b);
     Color(double r, double g, double b) ;
     Color(unsigned char r, unsigned char g, unsigned char b);
     Color(unsigned int hex);
@@ -30,7 +31,8 @@ public:
     static const Color Black; 
     static const Color Red;   
     static const Color Green; 
-    static const Color Blue;  
+    static const Color Blue;
+    static const Color Yellow;
 };
 
 

@@ -19,9 +19,9 @@
 #define WINDOW_WIDTH 400
 #define WINDOW_HEIGHT 400
 
-static void moveCamera(Camera *camera, const sf::Event &event);
+void moveCamera(Camera *camera, const sf::Event &event);
 
-static void draw(void *data, Color color, size_t x, size_t y) {
+void draw(void *data, Color color, size_t x, size_t y) {
     sf::Image *screen = (sf::Image*)data;
     sf::Color sfcolor;
     sfcolor.r = (sf::Uint8)(color.r * 255.0);
@@ -76,7 +76,7 @@ int main() {
     }
 }
 
-static void moveCamera(Camera *camera, const sf::Event &event) {
+void moveCamera(Camera *camera, const sf::Event &event) {
     const float moveSpeed = 1;
 #define HANDLE_KEY(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ camera->fun(moveSpeed); }
     HANDLE_KEY(W, moveForward)
@@ -89,5 +89,5 @@ static void moveCamera(Camera *camera, const sf::Event &event) {
     HANDLE_KEY(Down, lookDown)
     HANDLE_KEY(Left, lookLeft)
     HANDLE_KEY(Right, lookRight)
-#undef HANDLE
+#undef HANDLE_KEY
 }
