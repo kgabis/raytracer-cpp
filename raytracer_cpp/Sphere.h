@@ -22,6 +22,8 @@ public:
     bool CheckIntersection(const Ray &ray, float *distance) const;
     glm::vec3 GetNormalAtPoint(const glm::vec3 &point) const;
     ~Sphere() = default;
+    
+//    static void findIntersection(const Ray &ray, gl.position, l.intensity * 3, &currentHit);
 };
 
 

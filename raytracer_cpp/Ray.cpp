@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "TracingResult.h"
+#include "Color.h"
 
 #define MAX_RECURSION_DEPTH 4
 #define MAX_VISIBLE_DISTANCE 600
@@ -53,6 +54,9 @@ Color Ray::TraceRecursive(const Scene &scene, size_t depth) const {
     if (!closestHit.hit) {
         return scene.backgroundColor;
     }
+    if (closestHit.isLightSource) {
+        return Light::DefaultColor;
+    }
     Color closestHitColor = closestHit.material->color;
     glm::vec3 collisionPoint = (this->direction * closestHit.distance) + this->origin;
     const Material *material = closestHit.material;
@@ -69,8 +73,16 @@ Color Ray::TraceRecursive(const Scene &scene, size_t depth) const {
 
 void Ray::TraceOnce(const Scene &scene, TracingResult *result) const {
     TracingResult currentHit;
-    for (const auto &m : scene.meshes) {
+    for (const auto &m : scene.meshes) { // finds intersections with geometries
         m.FindIntersection(*this, &currentHit);
+        if (currentHit.hit && currentHit.distance < result->distance) {
+            *result = currentHit;
+        }
+    }
+    for (const auto &l : scene.lights ) { // finds intersection with light sources
+        Sphere s(l.position, l.intensity * Light::DefaultRadius);
+        currentHit.hit = s.CheckIntersection(*this, &currentHit.distance);
+        currentHit.isLightSource = true;
         if (currentHit.hit && currentHit.distance < result->distance) {
             *result = currentHit;
         }

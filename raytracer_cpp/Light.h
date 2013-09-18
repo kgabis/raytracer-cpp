@@ -12,6 +12,8 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
+#include "Color.h"
+
 class Light {
 public:
     glm::vec3 position;
@@ -22,6 +24,9 @@ public:
     glm::vec3 GetDirectionAtPoint( glm::vec3 point ) const;
     float GetDiffusedHighlight   ( glm::vec3 direction, glm::vec3 normal ) const;
     float GetSpecularHighlight   ( glm::vec3 direction, glm::vec3 normal, glm::vec3 rayDirection, float specularity ) const;
+    
+    static const Color DefaultColor;
+    static const float DefaultRadius;
 };
 
 #endif /* defined(__raytracer_cpp__Light__) */

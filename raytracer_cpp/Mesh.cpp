@@ -11,7 +11,9 @@
 #include "Color.h"
 #include <glm/gtx/rotate_vector.hpp>
 
-void Mesh::AddCube(glm::vec3 a, glm::vec3 b) {
+#define EPSILON 0.00001 // this value does nothing, overlapping objects look ugly
+
+void Mesh::AddCube(glm::vec3 a, glm::vec3 b, Material *mat) {
     glm::vec3 vs[8];
     vs[0] = a;
     vs[1] = glm::vec3(b.x, a.y, a.z);
@@ -21,26 +23,24 @@ void Mesh::AddCube(glm::vec3 a, glm::vec3 b) {
     vs[5] = glm::vec3(b.x, a.y, b.z);
     vs[6] = b;
     vs[7] = glm::vec3(a.x, b.y, b.z);
-    Material *redMat = new Material(Color::Red, 0, 0, 40);
-    Material *greenMat = new Material(Color::Green, 0, 0, 40);
     
-    AddTriangleWithMaterial(vs[0], vs[1], vs[3], redMat);
-    AddTriangleWithMaterial(vs[1], vs[2], vs[3], greenMat);
+    AddTriangleWithMaterial(vs[0], vs[1], vs[3], mat);
+    AddTriangleWithMaterial(vs[1], vs[2], vs[3], mat);
     
-    AddTriangleWithMaterial(vs[1], vs[5], vs[2], redMat);
-    AddTriangleWithMaterial(vs[5], vs[6], vs[2], greenMat);
+    AddTriangleWithMaterial(vs[1], vs[5], vs[2], mat);
+    AddTriangleWithMaterial(vs[5], vs[6], vs[2], mat);
     
-    AddTriangleWithMaterial(vs[3], vs[2], vs[7], redMat);
-    AddTriangleWithMaterial(vs[2], vs[6], vs[7], greenMat);
+    AddTriangleWithMaterial(vs[3], vs[2], vs[7], mat);
+    AddTriangleWithMaterial(vs[2], vs[6], vs[7], mat);
     
-    AddTriangleWithMaterial(vs[4], vs[7], vs[5], redMat);
-    AddTriangleWithMaterial(vs[5], vs[7], vs[6], greenMat);
+    AddTriangleWithMaterial(vs[4], vs[7], vs[5], mat);
+    AddTriangleWithMaterial(vs[5], vs[7], vs[6], mat);
     
-    AddTriangleWithMaterial(vs[0], vs[3], vs[4], redMat);
-    AddTriangleWithMaterial(vs[4], vs[3], vs[7], greenMat);
+    AddTriangleWithMaterial(vs[0], vs[3], vs[4], mat);
+    AddTriangleWithMaterial(vs[4], vs[3], vs[7], mat);
     
-    AddTriangleWithMaterial(vs[0], vs[4], vs[1], redMat);
-    AddTriangleWithMaterial(vs[4], vs[5], vs[1], greenMat);
+    AddTriangleWithMaterial(vs[0], vs[4], vs[1], mat);
+    AddTriangleWithMaterial(vs[4], vs[5], vs[1], mat);
 }
 
 void Mesh::AddTriangleWithMaterial(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, Material *m)
@@ -60,7 +60,7 @@ void Mesh::FindIntersectionInRange(const Ray &ray, TracingResult *tracingResult,
         const Triangle *t = tmp.first;
         const Material *m = tmp.second;
         currentHit = t->CheckIntersection(ray, &currentDistance);
-        if (currentHit && currentDistance < closestDistance && currentDistance > 0) {
+        if (currentHit && currentDistance < closestDistance && currentDistance > EPSILON) {
             closestDistance = currentDistance;
             tracingResult->hit = true;
             tracingResult->distance = closestDistance;
@@ -82,7 +82,7 @@ void Mesh::FindIntersection(const Ray &ray, TracingResult *tracingResult) const 
         const Triangle *t = tmp.first;
         const Material *m = tmp.second;
         currentHit = t->CheckIntersection(ray, &currentDistance);
-        if (currentHit && currentDistance < closestDistance && currentDistance > 0) {
+        if (currentHit && currentDistance < closestDistance && currentDistance > EPSILON) {
             closestDistance = currentDistance;
             tracingResult->hit = true;
             tracingResult->distance = closestDistance;

@@ -37,3 +37,6 @@ float Light::GetSpecularHighlight( glm::vec3 direction, glm::vec3 normal, glm::v
     }
     return std::pow(dot, specularity) * KS_CONST * this->intensity;
 }
+
+const Color Light::DefaultColor = Color(1.0, 1.0, 1.0);
+const float Light::DefaultRadius = 2.0;

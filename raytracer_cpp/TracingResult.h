@@ -18,12 +18,14 @@ struct TracingResult {
     float distance;
     const Material *material;
     glm::vec3 normal;
+    bool isLightSource;
     
     TracingResult(void) :
                     hit(false),
                     distance(1.0f / 0.0f),
                     material(nullptr),
-                    normal(glm::vec3(0.0f, 0.0f, 0.0f))
+                    normal(glm::vec3(0.0f, 0.0f, 0.0f)),
+                    isLightSource(false)
     { }
 };
 

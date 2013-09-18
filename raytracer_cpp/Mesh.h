@@ -21,7 +21,7 @@ class Ray;
 class Mesh {
 public:
     Mesh(void) = default;
-    void AddCube(glm::vec3 a, glm::vec3 b);
+    void AddCube(glm::vec3 a, glm::vec3 b, Material *mat);
     void AddTriangleWithMaterial(Triangle *triangle, Material *material);
     void AddTriangleWithMaterial(const glm::vec3 &v1,
                                  const glm::vec3 &v2,

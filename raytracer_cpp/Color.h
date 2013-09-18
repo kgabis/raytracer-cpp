@@ -35,5 +35,4 @@ public:
     static const Color Yellow;
 };
 
-
 #endif /* defined(__raytracer_cpp__Color__) */
