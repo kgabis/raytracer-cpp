@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE0D67CB17EADBD60069F14D /* Raytracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDF082917351E8B009A22BB /* Raytracer.cpp */; };
 		EE8B0743172D94EE00CCE082 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE8B0742172D94EE00CCE082 /* main.cpp */; };
 		EE8B0745172D94EE00CCE082 /* raytracer_cpp.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */; };
 		EE9B68AA17BF7CBD004347CE /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE9B68A817BF7CBC004347CE /* Sphere.cpp */; };
@@ -14,7 +15,7 @@
 		EE9B68B017BFAC81004347CE /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE9B68AE17BFAC81004347CE /* Mesh.cpp */; };
 		EED7199B172ECA7B00361A3B /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED71999172ECA7B00361A3B /* Ray.cpp */; };
 		EED7199E172ECB4F00361A3B /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED7199C172ECB4F00361A3B /* Color.cpp */; };
-		EEDF082B17351E8B009A22BB /* Raytracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = REEDF082917351E8B009A22BB /* Raytracer.cpp */; };
+		EEDF082B17351E8B009A22BB /* (null) in Sources */ = {isa = PBXBuildFile; };
 		EEDF082E17353915009A22BB /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDF082C17353915009A22BB /* Scene.cpp */; };
 		EEF7B465173555EF0031317F /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B463173555EF0031317F /* Camera.cpp */; };
 		EEF7B46E173556110031317F /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46C173556110031317F /* Material.cpp */; };
@@ -189,10 +190,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE0D67CB17EADBD60069F14D /* Raytracer.cpp in Sources */,
 				EE8B0743172D94EE00CCE082 /* main.cpp in Sources */,
 				EED7199B172ECA7B00361A3B /* Ray.cpp in Sources */,
 				EED7199E172ECB4F00361A3B /* Color.cpp in Sources */,
-				EEDF082B17351E8B009A22BB /* Raytracer.cpp in Sources */,
+				EEDF082B17351E8B009A22BB /* (null) in Sources */,
 				EEDF082E17353915009A22BB /* Scene.cpp in Sources */,
 				EEF7B465173555EF0031317F /* Camera.cpp in Sources */,
 				EEF7B46E173556110031317F /* Material.cpp in Sources */,
@@ -232,6 +234,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -259,6 +262,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};

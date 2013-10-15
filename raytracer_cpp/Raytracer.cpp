@@ -9,7 +9,8 @@
 #include "Raytracer.h"
 #include "Ray.h"
 
-Raytracer::Raytracer(size_t resolutionX, size_t resolutionY) {
+Raytracer::Raytracer(size_t resolutionX, size_t resolutionY)
+{
     this->scene = { resolutionX, resolutionY };
     this->resolutionX = resolutionX;
     this->resolutionY = resolutionY;
@@ -17,7 +18,7 @@ Raytracer::Raytracer(size_t resolutionX, size_t resolutionY) {
 
 void Raytracer::Render(DrawFunction drawFunction, void *data) {
     this->scene.camera.Update();
-    this->scene.test_RotateCube();
+    //this->scene.lights[0].position.z += 0.3f;
     for (size_t x = 0; x < this->resolutionX; x++) {
         for (size_t y = 0; y < this->resolutionY; y++) {
             Ray ray(this->scene.camera, x, y);
@@ -25,6 +26,7 @@ void Raytracer::Render(DrawFunction drawFunction, void *data) {
             drawFunction(data, color, x, y);
         }
     }
+    this->scene.test_RotateCube();
 }
 
 Raytracer::~Raytracer() {

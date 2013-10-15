@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include "Raytracer.h"
 #include "Color.h"
+#include "Ray.h"
 //#include <SFML/Graphics/Sprite.h>
 #include <stdio.h>
 #include <iostream>
@@ -19,7 +20,7 @@
 #define WINDOW_WIDTH 400
 #define WINDOW_HEIGHT 400
 
-void moveCamera(Camera *camera, const sf::Event &event);
+void handleInput(Raytracer *rt, const sf::Event &event);
 
 void draw(void *data, Color color, size_t x, size_t y) {
     sf::Image *screen = (sf::Image*)data;
@@ -32,14 +33,6 @@ void draw(void *data, Color color, size_t x, size_t y) {
 }
 
 int main() {
-//    glm::dvec3 dvec(1.0, 2.0, 3.0);
-//    glm::vec3 fvec(1.0f, 2.0f, 3.0f);
-//    glm::ivec3 ivec(1, 2, 3);
-//    size_t dvecs = sizeof(dvec.x);
-//    size_t fvecs = sizeof(fvec.x);
-//    size_t ivecs = sizeof(ivec.x);
-//    printf("%zu %zu %zu\n", dvecs, fvecs, ivecs);
-//    return 0;
     Raytracer raytracer(WINDOW_WIDTH, WINDOW_HEIGHT);
     sf::VideoMode mode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);
     sf::IntRect bounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -61,7 +54,7 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             } else {
-                moveCamera(&raytracer.scene.camera, event);
+                handleInput(&raytracer, event);
             }            
         }
         raytracer.Render(draw, &screen);
@@ -76,18 +69,23 @@ int main() {
     }
 }
 
-void moveCamera(Camera *camera, const sf::Event &event) {
+void handleInput(Raytracer *rt, const sf::Event &event) {
+    Camera *cam = &rt->scene.camera;
     const float moveSpeed = 1;
-#define HANDLE_KEY(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ camera->fun(moveSpeed); }
-    HANDLE_KEY(W, moveForward)
-    HANDLE_KEY(S, moveBackwards)
-    HANDLE_KEY(A, moveLeft)
-    HANDLE_KEY(D, moveRight)
-    HANDLE_KEY(E, moveUp)
-    HANDLE_KEY(C, moveDown)
-    HANDLE_KEY(Up, lookUp)
-    HANDLE_KEY(Down, lookDown)
-    HANDLE_KEY(Left, lookLeft)
-    HANDLE_KEY(Right, lookRight)
+#define HANDLE_CAM(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ cam->fun(moveSpeed); }
+    HANDLE_CAM(W, moveForward)
+    HANDLE_CAM(S, moveBackwards)
+    HANDLE_CAM(A, moveLeft)
+    HANDLE_CAM(D, moveRight)
+    HANDLE_CAM(E, moveUp)
+    HANDLE_CAM(C, moveDown)
+    HANDLE_CAM(Up, lookUp)
+    HANDLE_CAM(Down, lookDown)
+    HANDLE_CAM(Left, lookLeft)
+    HANDLE_CAM(Right, lookRight)    
+#undef HANDLE_CAM
+#define HANDLE_KEY(pressedKey, handler) if(event.key.code == sf::Keyboard::pressedKey){ handler; }
+    HANDLE_KEY(T, Ray::sFogShadows = true)
+    HANDLE_KEY(Y, Ray::sFogShadows = false)
 #undef HANDLE_KEY
 }

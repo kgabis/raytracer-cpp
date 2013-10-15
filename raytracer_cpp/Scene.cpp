@@ -15,7 +15,7 @@
 Scene::Scene() : Scene(0, 0) { }
 
 Scene::Scene(size_t cameraWidth, size_t cameraHeight) {
-    this->camera = Camera(glm::vec3(0.0f, 50, -100.0f), glm::vec3(0.0f, -0.5f, 1.0f),
+    this->camera = Camera(glm::vec3(-10, 20, -80), glm::vec3(0, 0, 1),
                            430, cameraWidth, cameraHeight);
     this->ambientCoefficient = 0.3;
     this->backgroundColor = Color::Blue;
@@ -31,13 +31,17 @@ void Scene::LoadDemo(void) {
     cube.AddCube(glm::vec3(-40, 0, -10), glm::vec3(-15, 25, 0), redMat);
     cube.AddCube(glm::vec3(100, 100, 100), glm::vec3(-100, 0, -150), blueMat);
 //    this->lights.push_back(Light(glm::vec3(0, 40, -90), 3));
-    this->lights.push_back(Light(glm::vec3(0, 60, -90), 1));
+    this->lights.push_back(Light(glm::vec3(0, 10, 90), 1));
 //    this->lights.push_back(Light(glm::vec3(-200, 0, -100), 1));
 //    this->lights.push_back(Light(glm::vec3(200, 0, -100), 1));
 }
 
 void Scene::test_RotateCube(void) {
-    //todo: implementation
+//    static float angle = 0;
+//    glm::vec3 axis = glm::vec3(0, 1, 0);
+//    Mesh &cube = meshes.back();
+//    cube.Rotate(axis, angle);
+//    angle += 0.2;
 }
 
 Scene::~Scene() {

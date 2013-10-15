@@ -71,7 +71,12 @@ void Mesh::FindIntersectionInRange(const Ray &ray, TracingResult *tracingResult,
 }
 
 void Mesh::Rotate(glm::vec3 axis, float deg) {
-// todo: implementation
+//    for (auto & tmp : _triangleMaterialPairs) {
+//        auto &t = tmp.first;
+//        t->a = glm::rotate(t->a, deg, axis);
+//        t->b = glm::rotate(t->b, deg, axis);
+//        t->c = glm::rotate(t->c, deg, axis);
+//    }
 }
 
 void Mesh::FindIntersection(const Ray &ray, TracingResult *tracingResult) const {
