@@ -55,7 +55,7 @@ Color Color::Blend(const Color &colorToBlend, double weight) const {
     return this->AddWeighted(weight, colorToBlend, weightB);
 }
 
-Color Color::GetHighlighted (float diffused, float specular, float ambientCoeff) const {
+Color Color::GetHighlighted (float diffused, float specular, float ambientCoeff, float distance, float intensity) const {
     float diffusedCoeff = 1.0 - ambientCoeff;
     Color color = this->Multiply(ambientCoeff + diffused * diffusedCoeff);
     color = color.Add(Color::White.Multiply(specular));

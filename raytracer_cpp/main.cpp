@@ -17,8 +17,8 @@
 #include <string.h>
 #include <glm/ext.hpp>
 
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 400
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 480
 
 void handleInput(Raytracer *rt, const sf::Event &event);
 
@@ -33,6 +33,7 @@ void draw(void *data, Color color, size_t x, size_t y) {
 }
 
 int main() {
+    srand((unsigned int)time(NULL));
     Raytracer raytracer(WINDOW_WIDTH, WINDOW_HEIGHT);
     sf::VideoMode mode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);
     sf::IntRect bounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);

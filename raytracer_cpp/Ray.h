@@ -41,7 +41,7 @@ private:
     void TraceOnce(const Scene &scene, TracingResult *result) const;
     bool TraceForShadow(const Scene &scene, float lightDistance) const;
     float GetFogIntensity(const Scene &scene, float distance) const;
-    float GetFogInShadowRatio(const Scene &scene, float hitDistance, int npoints) const;
+    float GetFogInShadowRatio(const Scene &scene, float hitDistance) const;
     ShadingResult ShadeAtPoint(const Scene &scene, const TracingResult &tracingResult, glm::vec3 point) const;
     
 };

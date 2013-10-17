@@ -25,7 +25,7 @@ public:
     Color AddWeighted    (double weightA, const Color &color, double weightB) const;
     Color Multiply       (double n) const;
     Color Blend          (const Color &colorToBlend, double weight) const;
-    Color GetHighlighted (float diffused, float specular, float ambientCoeff) const;
+    Color GetHighlighted (float diffused, float specular, float ambientCoeff, float distance, float intensity) const;
     
     static const Color White; 
     static const Color Black; 

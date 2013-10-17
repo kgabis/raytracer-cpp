@@ -14,8 +14,9 @@
 #include "Color.h"
 
 #define MAX_RECURSION_DEPTH 3
-#define MAX_VISIBLE_DISTANCE 700
+#define MAX_VISIBLE_DISTANCE 1000
 #define FOG_COLOR Color::White
+#define FOG_STEP 2.0f
 
 bool Ray::sFogShadows = false;
 
@@ -68,11 +69,11 @@ Color Ray::TraceRecursive(const Scene &scene, size_t recursionDepth) const {
         resultColor = reflectionColor.Blend(resultColor, material->reflectivity);
     }
     ShadingResult shadingResult = this->ShadeAtPoint(scene, closestHit, collisionPoint);
-    resultColor = resultColor.GetHighlighted(shadingResult.diffused, shadingResult.specular, scene.ambientCoefficient);
+    resultColor = resultColor.GetHighlighted(shadingResult.diffused, shadingResult.specular, scene.ambientCoefficient, closestHit.distance, 30);
     float fogIntensity = this->GetFogIntensity(scene, closestHit.distance);
     resultColor = resultColor.AddWeighted(1.0 - fogIntensity, FOG_COLOR, fogIntensity);
     if (sFogShadows) {
-        float fogInShadow = this->GetFogInShadowRatio(scene, closestHit.distance, 100);
+        float fogInShadow = this->GetFogInShadowRatio(scene, closestHit.distance);
         resultColor = resultColor.AddWeighted(1.0 - fogInShadow, Color::Black, fogInShadow);
     }
     return resultColor;
@@ -134,22 +135,18 @@ void Ray::print() const {
            this->direction.x, this->direction.y, this->direction.z);
 }
 
-/*
- 1. Znaleźć randomowy punkt między kamerą a max_distance (i go olac jesli jest dalej niz hit)
- 2. Z tego punktu puscic raya w kierunku swiatla
- 3. Jesli bedzie w cieniu blendowac kolor czarny, inaczej blendowac bialy
- 4. Stopien blendowania powinien zalezec od odleglosci
- W zasadzie to powinno sie znalezc N takich punktow i wszystkie blendowac, ale moze taka prosta mgla tez da rade
- */
 float Ray::GetFogIntensity(const Scene &scene, float distance) const {
-    return distance / MAX_VISIBLE_DISTANCE;
+    return distance / MAX_VISIBLE_DISTANCE + 0.03 * ((float)rand()/(float)RAND_MAX);
 }
 
-float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance, int npoints) const {
-    float step = hitDistance / npoints;
-    float distance = step;
+float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance) const {
+#define FOGSTEP_MIN 5.0
+#define FOGSTEP_MAX 10.0
+#define RANDOM_STEP() (((float)rand()/(float)RAND_MAX)*(FOGSTEP_MAX-FOGSTEP_MIN)+FOGSTEP_MIN)
+    float distance = RANDOM_STEP();
     int pointsInShadow = 0;
-    while (distance < hitDistance) {
+    int npoints = 0;
+    while (distance < hitDistance && distance < MAX_VISIBLE_DISTANCE) {
         glm::vec3 point = this->origin + this->direction * distance;
         for (auto &light : scene.lights) {
             glm::vec3 lightDirection = light.GetDirectionAtPoint(point);
@@ -158,9 +155,13 @@ float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance, int npoint
             if (shadowRay.TraceForShadow(scene, lightDistance)) {
                 pointsInShadow++;
             }
+            npoints++;
         }
-        distance += step;
+        distance += RANDOM_STEP();
     }
     return (float)pointsInShadow / (float)npoints;
+#undef FOGSTEP_MIN
+#undef FOGSTEP_MAX
+#undef RANDOM_STEP
 }
 
