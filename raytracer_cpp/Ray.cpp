@@ -142,7 +142,7 @@ float Ray::GetFogIntensity(const Scene &scene, float distance) const {
 float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance) const {
 #define FOGSTEP_MIN 5.0
 #define FOGSTEP_MAX 10.0
-#define RANDOM_STEP() (((float)rand()/(float)RAND_MAX)*(FOGSTEP_MAX-FOGSTEP_MIN)+FOGSTEP_MIN)
+#define RANDOM_STEP() (((float)random()/(float)RAND_MAX)*(FOGSTEP_MAX-FOGSTEP_MIN)+FOGSTEP_MIN)
     float distance = RANDOM_STEP();
     int pointsInShadow = 0;
     int npoints = 0;

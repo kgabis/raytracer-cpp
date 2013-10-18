@@ -17,8 +17,7 @@
 #include <string.h>
 #include <glm/ext.hpp>
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+#include "global.h"
 
 void handleInput(Raytracer *rt, const sf::Event &event);
 
@@ -34,13 +33,13 @@ void draw(void *data, Color color, size_t x, size_t y) {
 
 int main() {
     srand((unsigned int)time(NULL));
-    Raytracer raytracer(WINDOW_WIDTH, WINDOW_HEIGHT);
-    sf::VideoMode mode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);
-    sf::IntRect bounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    Raytracer raytracer(WIDTH, HEIGHT);
+    sf::VideoMode mode(WIDTH, HEIGHT, 32);
+    sf::IntRect bounds(0, 0, WIDTH, HEIGHT);
     sf::RenderWindow window(mode, "RayTracerCxx");
     sf::Event event;
     sf::Image screen;
-    screen.create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color::White);
+    screen.create(WIDTH, HEIGHT, sf::Color::White);
     sf::Sprite sprite;
     sf::Texture texture;
     texture.loadFromImage(screen);
@@ -50,7 +49,7 @@ int main() {
     raytracer.scene.LoadDemo();
     while (window.isOpen()) {
         clock.restart();
-        screen.create(WINDOW_WIDTH, WINDOW_HEIGHT, sf::Color::White);
+        screen.create(WIDTH, HEIGHT, sf::Color::White);
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
@@ -78,8 +77,8 @@ void handleInput(Raytracer *rt, const sf::Event &event) {
     HANDLE_CAM(S, moveBackwards)
     HANDLE_CAM(A, moveLeft)
     HANDLE_CAM(D, moveRight)
-    HANDLE_CAM(E, moveUp)
-    HANDLE_CAM(C, moveDown)
+    HANDLE_CAM(Q, moveUp)
+    HANDLE_CAM(E, moveDown)
     HANDLE_CAM(Up, lookUp)
     HANDLE_CAM(Down, lookDown)
     HANDLE_CAM(Left, lookLeft)
@@ -88,5 +87,15 @@ void handleInput(Raytracer *rt, const sf::Event &event) {
 #define HANDLE_KEY(pressedKey, handler) if(event.key.code == sf::Keyboard::pressedKey){ handler; }
     HANDLE_KEY(T, Ray::sFogShadows = true)
     HANDLE_KEY(Y, Ray::sFogShadows = false)
+    HANDLE_KEY(G, Raytracer::sRandTresh *= 0.95)
+    HANDLE_KEY(H, Raytracer::sRandTresh *= 1.05)
+    
+    HANDLE_KEY(J, rt->scene.lights[0].position.x -= moveSpeed)
+    HANDLE_KEY(L, rt->scene.lights[0].position.x += moveSpeed)
+    HANDLE_KEY(K, rt->scene.lights[0].position.z -= moveSpeed)
+    HANDLE_KEY(I, rt->scene.lights[0].position.z += moveSpeed)
+    HANDLE_KEY(U, rt->scene.lights[0].position.y += moveSpeed)
+    HANDLE_KEY(O, rt->scene.lights[0].position.y -= moveSpeed)
+
 #undef HANDLE_KEY
 }

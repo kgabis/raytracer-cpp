@@ -20,6 +20,7 @@ public:
     Scene  scene;
     size_t resolutionX;
     size_t resolutionY;
+    static float sRandTresh;
     
     Raytracer( size_t resolutionX, size_t resolutionY );    
     void Render( DrawFunction drawFunction, void *data );

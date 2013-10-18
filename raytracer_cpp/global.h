@@ -9,5 +9,7 @@
 #ifndef raytracer_cpp_global_h
 #define raytracer_cpp_global_h
 
+#define WIDTH 640
+#define HEIGHT 480
 
 #endif
