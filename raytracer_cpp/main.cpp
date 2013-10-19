@@ -59,8 +59,11 @@ int main() {
         }
         raytracer.Render(draw, &screen);
         texture.loadFromImage(screen);
+        texture.setSmooth(true);
         window.clear(sf::Color::White);
+        
         texture.bind();
+        
         window.draw(sprite);
         window.display();
         
@@ -72,7 +75,7 @@ int main() {
 void handleInput(Raytracer *rt, const sf::Event &event) {
     Camera *cam = &rt->scene.camera;
     const float moveSpeed = 1;
-#define HANDLE_CAM(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ cam->fun(moveSpeed); }
+#define HANDLE_CAM(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ rt->needsUpdate(true);cam->fun(moveSpeed); }
     HANDLE_CAM(W, moveForward)
     HANDLE_CAM(S, moveBackwards)
     HANDLE_CAM(A, moveLeft)
@@ -84,7 +87,7 @@ void handleInput(Raytracer *rt, const sf::Event &event) {
     HANDLE_CAM(Left, lookLeft)
     HANDLE_CAM(Right, lookRight)    
 #undef HANDLE_CAM
-#define HANDLE_KEY(pressedKey, handler) if(event.key.code == sf::Keyboard::pressedKey){ handler; }
+#define HANDLE_KEY(pressedKey, handler) if(event.key.code == sf::Keyboard::pressedKey){ rt->needsUpdate(true); handler; }
     HANDLE_KEY(T, Ray::sFogShadows = true)
     HANDLE_KEY(Y, Ray::sFogShadows = false)
     HANDLE_KEY(G, Raytracer::sRandTresh *= 0.95)

@@ -15,6 +15,7 @@
 
 #define MAX_RECURSION_DEPTH 3
 #define MAX_VISIBLE_DISTANCE 1000
+#define MAX_LIGHT_DISTANCE 500
 #define FOG_COLOR Color::White
 #define FOG_STEP 2.0f
 
@@ -69,7 +70,7 @@ Color Ray::TraceRecursive(const Scene &scene, size_t recursionDepth) const {
         resultColor = reflectionColor.Blend(resultColor, material->reflectivity);
     }
     ShadingResult shadingResult = this->ShadeAtPoint(scene, closestHit, collisionPoint);
-    resultColor = resultColor.GetHighlighted(shadingResult.diffused, shadingResult.specular, scene.ambientCoefficient, closestHit.distance, 30);
+    resultColor = resultColor.GetHighlighted(shadingResult.diffused, shadingResult.specular, scene.ambientCoefficient, closestHit.distance, MAX_LIGHT_DISTANCE);
     float fogIntensity = this->GetFogIntensity(scene, closestHit.distance);
     resultColor = resultColor.AddWeighted(1.0 - fogIntensity, FOG_COLOR, fogIntensity);
     if (sFogShadows) {

@@ -14,7 +14,7 @@
 static Color pixels[WIDTH][HEIGHT];
 static bool  isRendered[WIDTH][HEIGHT];
 
-float Raytracer::sRandTresh = 0.4;
+float Raytracer::sRandTresh = 0.8;
 
 static void resetIsRendered( void ) {
     for (size_t x = 0; x < WIDTH; x++) {
@@ -36,24 +36,10 @@ Color getPixel(size_t x, size_t y, const Ray &ray, const Scene &scene) {
     if (WIDTH < x || HEIGHT < y) {
         return Color();
     }
-    size_t xToSet = x, yToSet = y;
-    float step = Raytracer::sRandTresh / 4.0f;
-    if (isRendered[x][y]) {
-        return pixels[x][y];
-    }
     float r = (float)random()/(float)RAND_MAX;
-    if (r > Raytracer::sRandTresh) {
+    if (!isRendered[x][y] && r > Raytracer::sRandTresh) {
             pixels[x][y] = ray.Trace(scene);
             isRendered[x][y] = true;    
-//    } else {
-//        if (r < step)            xToSet = (x - 1) % WIDTH;
-//        else if (r < (2 * step)) xToSet = (x + 1) % WIDTH;
-//        else if (r < (3 * step)) yToSet = (y - 1) % HEIGHT;
-//        else                     yToSet = (y + 1) % HEIGHT;
-//        pixels[x][y] = ray.Trace(scene);
-//        isRendered[x][y] = true;
-//        pixels[xToSet][yToSet] = pixels[x][y];
-//        isRendered[xToSet][yToSet] = true;
     }
     return pixels[x][y];
 }
@@ -68,7 +54,6 @@ Raytracer::Raytracer(size_t resolutionX, size_t resolutionY)
 void Raytracer::Render(DrawFunction drawFunction, void *data) {
     this->scene.camera.Update();
     Color color;
-    resetIsRendered();
     //this->scene.lights[0].position.z += 0.3f;
     for (size_t x = 0; x < this->resolutionX; x++) {
         for (size_t y = 0; y < this->resolutionY; y++) {
@@ -78,6 +63,12 @@ void Raytracer::Render(DrawFunction drawFunction, void *data) {
         }
     }
     this->scene.test_RotateCube();
+}
+
+void Raytracer::needsUpdate(bool value) {
+    if (value) {
+        resetIsRendered();
+    }
 }
 
 Raytracer::~Raytracer() {

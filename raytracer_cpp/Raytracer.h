@@ -24,6 +24,7 @@ public:
     
     Raytracer( size_t resolutionX, size_t resolutionY );    
     void Render( DrawFunction drawFunction, void *data );
+    void needsUpdate(bool value);
     ~Raytracer();
 };
 

@@ -21,7 +21,7 @@ glm::vec3 Light::GetDirectionAtPoint( glm::vec3 point ) const {
 
 float Light::GetDiffusedHighlight( glm::vec3 direction, glm::vec3 normal ) const {
     float highlight = glm::dot(normal, direction);
-    if ( highlight < 0.0f ) {
+    if ( highlight <= 0.0f ) {
         return 0.0f;
     }
     return highlight * this->intensity;
@@ -32,7 +32,7 @@ float Light::GetSpecularHighlight( glm::vec3 direction, glm::vec3 normal, glm::v
     glm::vec3 V = -rayDirection;
     glm::vec3 R = direction - (normal * highlight * 2.0f);
     float dot = glm::dot(V, R);
-    if ( dot < 0.0f ) {
+    if ( dot <= 0.0f ) {
         return 0.0f;
     }
     return std::pow(dot, specularity) * KS_CONST * this->intensity;

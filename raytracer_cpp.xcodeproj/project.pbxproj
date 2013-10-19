@@ -11,7 +11,6 @@
 		EE8B0743172D94EE00CCE082 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE8B0742172D94EE00CCE082 /* main.cpp */; };
 		EE8B0745172D94EE00CCE082 /* raytracer_cpp.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */; };
 		EE9B68AA17BF7CBD004347CE /* Sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE9B68A817BF7CBC004347CE /* Sphere.cpp */; };
-		EE9B68AD17BF7CC8004347CE /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE9B68AB17BF7CC8004347CE /* Triangle.cpp */; };
 		EE9B68B017BFAC81004347CE /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE9B68AE17BFAC81004347CE /* Mesh.cpp */; };
 		EED7199B172ECA7B00361A3B /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED71999172ECA7B00361A3B /* Ray.cpp */; };
 		EED7199E172ECB4F00361A3B /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED7199C172ECB4F00361A3B /* Color.cpp */; };
@@ -41,7 +40,6 @@
 		EE8B0744172D94EE00CCE082 /* raytracer_cpp.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = raytracer_cpp.1; sourceTree = "<group>"; };
 		EE9B68A817BF7CBC004347CE /* Sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sphere.cpp; sourceTree = "<group>"; };
 		EE9B68A917BF7CBC004347CE /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
-		EE9B68AB17BF7CC8004347CE /* Triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle.cpp; sourceTree = "<group>"; };
 		EE9B68AC17BF7CC8004347CE /* Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle.h; sourceTree = "<group>"; };
 		EE9B68AE17BFAC81004347CE /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
 		EE9B68AF17BFAC81004347CE /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
@@ -133,7 +131,6 @@
 				EEDF082917351E8B009A22BB /* Raytracer.cpp */,
 				EEDF082C17353915009A22BB /* Scene.cpp */,
 				EE9B68A817BF7CBC004347CE /* Sphere.cpp */,
-				EE9B68AB17BF7CC8004347CE /* Triangle.cpp */,
 				EE9B68AE17BFAC81004347CE /* Mesh.cpp */,
 			);
 			name = Source;
@@ -200,7 +197,6 @@
 				EEF7B46E173556110031317F /* Material.cpp in Sources */,
 				EEF7B471173556160031317F /* Light.cpp in Sources */,
 				EE9B68AA17BF7CBD004347CE /* Sphere.cpp in Sources */,
-				EE9B68AD17BF7CC8004347CE /* Triangle.cpp in Sources */,
 				EE9B68B017BFAC81004347CE /* Mesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
