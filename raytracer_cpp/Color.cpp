@@ -9,11 +9,17 @@
 #include "Color.h"
 #include <algorithm>
 
-Color::Color() : Color(1.0f, 1.0f, 1.0f) { }
+Color::Color() : Color(1.0f, 0.0f, 1.0f) { }
 
 Color::Color(int r, int g, int b) :
        Color(r / 255.0, g / 255.0, b / 255.0)
 { }
+
+Color::Color(float r, float g, float b) {
+    this->r = std::min(r, 1.0f);
+    this->g = std::min(g, 1.0f);
+    this->b = std::min(b, 1.0f);
+}
 
 Color::Color(double r, double g, double b) {
     this->r = std::min(r, 1.0);
@@ -22,9 +28,9 @@ Color::Color(double r, double g, double b) {
 }
 
 Color::Color(unsigned char r, unsigned char g, unsigned char b) {
-    this->r = static_cast<double>(r) / 255.0;
-    this->g = static_cast<double>(g) / 255.0;
-    this->b = static_cast<double>(b) / 255.0;
+    this->r = std::min((float)r / 255.0f, 1.0f);
+    this->g = std::min((float)g / 255.0f, 1.0f);
+    this->b = std::min((float)b / 255.0f, 1.0f);
 }
 
 Color::Color(unsigned int hex) : Color(static_cast<unsigned char>(hex >> 16),
@@ -57,7 +63,7 @@ Color Color::Blend(const Color &colorToBlend, double weight) const {
 
 Color Color::GetHighlighted (float diffused, float specular, float ambientCoeff, float d, float maxD) const {
     float diffusedCoeff = 1.0 - ambientCoeff;
-    float atten = 1.0 - ((d / maxD) * (d / maxD));
+    float atten = std::max(1.0f - ((d / maxD) * (d / maxD)), 0.0f);
     Color color = this->Multiply(ambientCoeff + diffused * diffusedCoeff * atten);
     color = color.Add(Color::White.Multiply(specular * atten));
     return color;

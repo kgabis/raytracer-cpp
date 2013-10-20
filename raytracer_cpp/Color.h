@@ -13,10 +13,11 @@
 
 class Color {
 public:
-    double r, g, b;
+    float r, g, b;
     
     Color();
     Color(int r, int g, int b);
+    Color(float r, float g, float b) ;
     Color(double r, double g, double b) ;
     Color(unsigned char r, unsigned char g, unsigned char b);
     Color(unsigned int hex);

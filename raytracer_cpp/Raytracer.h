@@ -13,6 +13,9 @@
 #include "Color.h"
 #include "Scene.h"
 
+#include <queue>
+#include <algorithm>
+
 typedef void ( *DrawFunction )( void *data, Color color, size_t x, size_t y );
 
 class Raytracer {

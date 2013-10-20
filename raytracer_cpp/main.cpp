@@ -45,6 +45,9 @@ int main() {
     texture.loadFromImage(screen);
     sf::Clock clock;
     sf::Time time;
+    sf::Text text;
+    text.setPosition(5, 5);
+    text.setCharacterSize(14);
     sprite.setTexture(texture);
     raytracer.scene.LoadDemo();
     while (window.isOpen()) {
@@ -63,8 +66,8 @@ int main() {
         window.clear(sf::Color::White);
         
         texture.bind();
-        
         window.draw(sprite);
+        window.draw(text);
         window.display();
         
         time = clock.getElapsedTime();

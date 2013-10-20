@@ -15,9 +15,9 @@
 
 #define MAX_RECURSION_DEPTH 3
 #define MAX_VISIBLE_DISTANCE 1000
-#define MAX_LIGHT_DISTANCE 500
+#define MAX_LIGHT_DISTANCE 300
 #define FOG_COLOR Color::White
-#define FOG_STEP 2.0f
+#define FOG_INTENSITY 10
 
 bool Ray::sFogShadows = false;
 
@@ -56,7 +56,11 @@ Color Ray::TraceRecursive(const Scene &scene, size_t recursionDepth) const {
     TracingResult closestHit;
     this->TraceOnce(scene, &closestHit);
     if (!closestHit.hit) { // no hit
-        return scene.backgroundColor;
+        if (this->direction.y > 0) {
+            return scene.skyColor;
+        } else {
+            return scene.groundColor;
+        }
     }
     if (closestHit.isLightSource) { // hit light source's sphere
         return Light::DefaultColor;
@@ -141,12 +145,12 @@ float Ray::GetFogIntensity(const Scene &scene, float distance) const {
 }
 
 float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance) const {
-#define FOGSTEP_MIN 5.0
-#define FOGSTEP_MAX 10.0
+#define FOGSTEP_MIN 10.0
+#define FOGSTEP_MAX 15.0
 #define RANDOM_STEP() (((float)random()/(float)RAND_MAX)*(FOGSTEP_MAX-FOGSTEP_MIN)+FOGSTEP_MIN)
     float distance = RANDOM_STEP();
     int pointsInShadow = 0;
-    int npoints = 0;
+    int npoints = 5;
     while (distance < hitDistance && distance < MAX_VISIBLE_DISTANCE) {
         glm::vec3 point = this->origin + this->direction * distance;
         for (auto &light : scene.lights) {

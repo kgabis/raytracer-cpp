@@ -22,7 +22,8 @@ public:
     std::vector<Light> lights;
     double ambientCoefficient;
     Camera camera;
-    Color backgroundColor;
+    Color groundColor;
+    Color skyColor;
     
     Scene();
     Scene(size_t cameraWidth, size_t cameraHeight);
