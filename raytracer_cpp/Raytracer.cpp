@@ -13,7 +13,7 @@
 
 static Color pixels[WIDTH][HEIGHT];
 static bool  isRendered[WIDTH][HEIGHT];
-//static std::queue<std::pair<size_t, size_t>, Ray> renderQueue;
+static bool  needsRendering;
 
 float Raytracer::sRandTresh = 0.5;
 
