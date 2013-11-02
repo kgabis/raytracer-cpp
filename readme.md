@@ -2,7 +2,7 @@
 Raytracer in c++. Unfinished, unpolished and messy but nevertheless here it is.
 
 ##Controls:
-WASDQE, ARROWS - camera controls  
+WASDQE, arrows - camera controls  
 IJKLUO - light controls  
 T/Y - Volumetric shadows on/off  
 F/G - Random rendering tresh +/-  
