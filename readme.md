@@ -1,11 +1,14 @@
 ##About
-Raytracer in c++. Unfinished, unpolished, but nevertheless here it is.
+Raytracer in c++. Unfinished, unpolished and messy but nevertheless here it is.
 
 ##Controls:
-WASDQE, ARROWS - camera controls
-IJKLUO - light controls
-T/Y - Volumetric shadows on/off
-F/G - Random rendering tresh +/-
+WASDQE, ARROWS - camera controls  
+IJKLUO - light controls  
+T/Y - Volumetric shadows on/off  
+F/G - Random rendering tresh +/-  
+
+##Dependencies
+SFML 2.0
 
 ##Screens
 ![first](screens/1.png)
