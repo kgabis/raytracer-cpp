@@ -11,7 +11,7 @@
 #include "Color.h"
 #include <glm/gtx/rotate_vector.hpp>
 
-#define EPSILON 0.00001 // this value does nothing, overlapping objects look ugly
+#define EPSILON 0.00001f
 
 void Mesh::AddCube(glm::vec3 a, glm::vec3 b, Material *mat) {
     glm::vec3 vs[8];
@@ -52,6 +52,27 @@ void Mesh::AddTriangleWithMaterial(Triangle *triangle, Material *material) {
     _triangleMaterialPairs.push_back(std::make_pair(triangle, material));
 }
 
+void Mesh::AddTriangleWithMaterial(Triangle triangle, Material material) {
+    _triangles.push_back(triangle);
+    _materials.push_back(material);
+}
+
+bool Mesh::FindFirstIntersectionInRange(const Ray &ray, float range, const Triangle **collider) const {
+    float distance = FLT_MAX;
+    bool currentHit = false;
+    const Triangle *t = nullptr;
+    for (const auto &tmp : _triangleMaterialPairs) {
+        t = tmp.first;
+        currentHit = t->CheckIntersection(ray, &distance);
+        if (currentHit && distance < range && distance > EPSILON) {
+            *collider = t;
+            return true;
+        }
+    }
+    *collider = nullptr;
+    return false;
+}
+
 void Mesh::FindIntersectionInRange(const Ray &ray, TracingResult *tracingResult, float range) const {
     float closestDistance = range;
     float currentDistance = 1.0 / 0.0f;
@@ -66,6 +87,8 @@ void Mesh::FindIntersectionInRange(const Ray &ray, TracingResult *tracingResult,
             tracingResult->distance = closestDistance;
             tracingResult->material = m;
             tracingResult->normal = t->normal;
+            tracingResult->triangle = t;
+            return;
         }
     }
 }
@@ -93,6 +116,7 @@ void Mesh::FindIntersection(const Ray &ray, TracingResult *tracingResult) const 
             tracingResult->distance = closestDistance;
             tracingResult->material = m;
             tracingResult->normal = t->normal;
+            tracingResult->triangle = t;
         }
     }
 }

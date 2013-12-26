@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "TracingResult.h"
 #include "Color.h"
+#include "Diagnostics.h"
 
 #define MAX_RECURSION_DEPTH 3
 #define MAX_VISIBLE_DISTANCE 1000
@@ -42,7 +43,7 @@ Ray::Ray(const Camera &camera, size_t x, size_t y) {
     this->direction = u_r;
 }
 
-Color Ray::Trace(const Scene &scene) const {
+Color Ray::Trace(Scene &scene) const {
     return this->TraceRecursive(scene, MAX_RECURSION_DEPTH);
 }
 
@@ -52,15 +53,11 @@ Ray Ray::Reflect(const glm::vec3 &normal, const glm::vec3 &collisionPoint) const
     return Ray(collisionPoint, reflectedDirection);
 }
 
-Color Ray::TraceRecursive(const Scene &scene, size_t recursionDepth) const {
+Color Ray::TraceRecursive(Scene &scene, size_t recursionDepth) const {
     TracingResult closestHit;
     this->TraceOnce(scene, &closestHit);
     if (!closestHit.hit) { // no hit
-        if (this->direction.y > 0) {
-            return scene.skyColor;
-        } else {
-            return scene.groundColor;
-        }
+        return this->direction.y > 0 ? scene.skyColor : scene.groundColor;
     }
     if (closestHit.isLightSource) { // hit light source's sphere
         return Light::DefaultColor;
@@ -84,7 +81,7 @@ Color Ray::TraceRecursive(const Scene &scene, size_t recursionDepth) const {
     return resultColor;
 }
 
-void Ray::TraceOnce(const Scene &scene, TracingResult *result) const {
+void Ray::TraceOnce(Scene &scene, TracingResult *result) const {
     TracingResult currentHit;
     for (const auto &m : scene.meshes) { // finds intersections with geometries
         m.FindIntersection(*this, &currentHit);
@@ -102,18 +99,28 @@ void Ray::TraceOnce(const Scene &scene, TracingResult *result) const {
     }
 }
 
-bool Ray::TraceForShadow(const Scene &scene, float lightDistance) const {
-    TracingResult result;
+bool Ray::TraceForShadow(Scene &scene, float lightDistance, const Triangle **lastOccluder) const {
+    float distance = FLT_MAX;
+    ++Diagnostics::shadowTests;
+    if ( lastOccluder != nullptr ) {
+        bool hit = (*lastOccluder)->CheckIntersection(*this, &distance);
+        if ( hit && distance < lightDistance && distance > 0.00001f) {
+            ++Diagnostics::cachedShadowHits;
+            return true;
+        }
+    }
+    const Triangle *t = nullptr;
     for (const auto &m : scene.meshes) {
-        m.FindIntersectionInRange(*this, &result, lightDistance);
-        if (result.hit) {
+        bool hit = m.FindFirstIntersectionInRange(*this, lightDistance, &t);
+        if (hit) {
+            *lastOccluder = t;
             return true;
         }
     }
     return false;   
 }
 
-ShadingResult Ray::ShadeAtPoint(const Scene &scene, const TracingResult &tracingResult, glm::vec3 point) const {
+ShadingResult Ray::ShadeAtPoint(Scene &scene, const TracingResult &tracingResult, glm::vec3 point) const {
     ShadingResult shadingResult = { .diffused = 0, .specular = 0 };
     float lightDistance;
     glm::vec3 lightDirection;
@@ -124,7 +131,7 @@ ShadingResult Ray::ShadeAtPoint(const Scene &scene, const TracingResult &tracing
         newRay.origin = point;
         newRay.direction = -lightDirection;
         lightDistance = glm::length(point - light.position);
-        isInShadow = newRay.TraceForShadow(scene, lightDistance);
+        isInShadow = newRay.TraceForShadow(scene, lightDistance, &light.lastOccluder);
         if (!isInShadow) {
             glm::vec3 normal = tracingResult.normal;
             shadingResult.diffused += light.GetDiffusedHighlight(lightDirection, normal);
@@ -140,11 +147,11 @@ void Ray::print() const {
            this->direction.x, this->direction.y, this->direction.z);
 }
 
-float Ray::GetFogIntensity(const Scene &scene, float distance) const {
+float Ray::GetFogIntensity(Scene &scene, float distance) const {
     return distance / MAX_VISIBLE_DISTANCE + 0.03 * ((float)rand()/(float)RAND_MAX);
 }
 
-float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance) const {
+float Ray::GetFogInShadowRatio(Scene &scene, float hitDistance) const {
 #define FOGSTEP_MIN 10.0
 #define FOGSTEP_MAX 15.0
 #define RANDOM_STEP() (((float)random()/(float)RAND_MAX)*(FOGSTEP_MAX-FOGSTEP_MIN)+FOGSTEP_MIN)
@@ -157,7 +164,7 @@ float Ray::GetFogInShadowRatio(const Scene &scene, float hitDistance) const {
             glm::vec3 lightDirection = light.GetDirectionAtPoint(point);
             Ray shadowRay(point, -lightDirection);
             float lightDistance = glm::length(point - light.position);
-            if (shadowRay.TraceForShadow(scene, lightDistance)) {
+            if (shadowRay.TraceForShadow(scene, lightDistance, &light.lastOccluder)) {
                 pointsInShadow++;
             }
             npoints++;

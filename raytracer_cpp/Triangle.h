@@ -20,6 +20,10 @@ public:
     glm::vec3 edges[2];
     glm::vec3 normal;
     
+    Triangle( ) {
+        
+    }
+    
     Triangle( glm::vec3 a, glm::vec3 b, glm::vec3 c ) {
         this->a = a;
         this->b = b;

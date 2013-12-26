@@ -13,7 +13,6 @@
 
 static Color pixels[WIDTH][HEIGHT];
 static bool  isRendered[WIDTH][HEIGHT];
-static bool  needsRendering;
 
 float Raytracer::sRandTresh = 0.5;
 
@@ -33,15 +32,15 @@ void setPixel(size_t x, size_t y, Color c) {
     isRendered[x][y] = true;
 }
 
-Color getPixel(size_t x, size_t y, const Ray &ray, const Scene &scene) {
+Color getPixel(size_t x, size_t y, const Ray &ray, Scene &scene) {
     if (WIDTH < x || HEIGHT < y) {
         return Color();
     }
-    float r = (float)random()/(float)RAND_MAX;
-    if (!isRendered[x][y] && r > Raytracer::sRandTresh) {
+    //float r = (float)random()/(float)RAND_MAX;
+    //if (!isRendered[x][y] && r > Raytracer::sRandTresh) {
             pixels[x][y] = ray.Trace(scene);
-            isRendered[x][y] = true;    
-    }
+    //        isRendered[x][y] = true;
+    //}
     return pixels[x][y];
 }
 

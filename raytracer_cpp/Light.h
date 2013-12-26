@@ -14,10 +14,13 @@
 
 #include "Color.h"
 
+class Triangle;
+
 class Light {
 public:
     glm::vec3 position;
     float intensity;
+    const Triangle *lastOccluder;
     
     Light( glm::vec3 position, float intensity );
     

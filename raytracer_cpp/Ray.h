@@ -31,18 +31,18 @@ public:
     Ray();
     Ray(glm::vec3 origin, glm::vec3 direction);
     Ray(const Camera &camera, size_t x, size_t y);
-    Color Trace(const Scene &scene) const;
+    Color Trace(Scene &scene) const;
     void print() const;
     static bool sFogShadows;
 
 private:
     Ray Reflect(const glm::vec3 &normal, const glm::vec3 &collisionPoint) const;
-    Color TraceRecursive(const Scene &scene, size_t depth) const;
-    void TraceOnce(const Scene &scene, TracingResult *result) const;
-    bool TraceForShadow(const Scene &scene, float lightDistance) const;
-    float GetFogIntensity(const Scene &scene, float distance) const;
-    float GetFogInShadowRatio(const Scene &scene, float hitDistance) const;
-    ShadingResult ShadeAtPoint(const Scene &scene, const TracingResult &tracingResult, glm::vec3 point) const;
+    Color TraceRecursive(Scene &scene, size_t depth) const;
+    void TraceOnce(Scene &scene, TracingResult *result) const;
+    bool TraceForShadow(Scene &scene, float lightDistance, const Triangle **lastOccluder) const;
+    float GetFogIntensity(Scene &scene, float distance) const;
+    float GetFogInShadowRatio(Scene &scene, float hitDistance) const;
+    ShadingResult ShadeAtPoint(Scene &scene, const TracingResult &tracingResult, glm::vec3 point) const;
     
 };
 

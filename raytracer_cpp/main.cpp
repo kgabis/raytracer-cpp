@@ -6,11 +6,14 @@
 //  Copyright (c) 2013 Krzysztof Gabis. All rights reserved.
 //
 // 17.08.2013 11:40 avg time for 2 triangles and 2 spheres: 0.04
+// 26.12.2013 15:05 avg time for 4 boxes: 0.55s or 3s with shadows
+
 
 #include <SFML/Graphics.hpp>
 #include "Raytracer.h"
 #include "Color.h"
 #include "Ray.h"
+#include "Diagnostics.h"
 //#include <SFML/Graphics/Sprite.h>
 #include <stdio.h>
 #include <iostream>
@@ -73,6 +76,10 @@ int main() {
         time = clock.getElapsedTime();
         printf("Seconds per frame: %f\n", time.asSeconds());
     }
+    printf("Shadow tests:\t\t%u\n", Diagnostics::shadowTests);
+    printf("Cached shadow hits:\t%u\n", Diagnostics::cachedShadowHits);
+    printf("Cached hits / tests ratio = %.3f%%\n",
+           (float)Diagnostics::cachedShadowHits / (float)Diagnostics::shadowTests * 100.0f);
 }
 
 void handleInput(Raytracer *rt, const sf::Event &event) {

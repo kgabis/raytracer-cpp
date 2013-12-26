@@ -12,11 +12,13 @@
 #include <glm/glm.hpp>
 
 class Material;
+class Triangle;
 
 struct TracingResult {
     bool hit;
     float distance;
     const Material *material;
+    const Triangle *triangle;
     glm::vec3 normal;
     bool isLightSource;
     
@@ -25,7 +27,8 @@ struct TracingResult {
                     distance(1.0f / 0.0f),
                     material(nullptr),
                     normal(glm::vec3(0.0f, 0.0f, 0.0f)),
-                    isLightSource(false)
+                    isLightSource(false),
+                    triangle(nullptr)
     { }
 };
 
