@@ -11,8 +11,11 @@
 
 class Diagnostics {
 public:
+    static unsigned int triangleCount;
     static unsigned int shadowTests;
-    static unsigned int cachedShadowHits;    
+    static unsigned int cachedShadowHits;
+    
+    static void Print();
 };
 
 #endif /* defined(__raytracer_cpp__Diagnostics__) */

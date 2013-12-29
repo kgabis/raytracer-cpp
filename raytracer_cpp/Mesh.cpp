@@ -9,11 +9,12 @@
 #include "Mesh.h"
 #include "TracingResult.h"
 #include "Color.h"
+#include "global.h"
+#include "Diagnostics.h"
+
 #include <glm/gtx/rotate_vector.hpp>
 
-#define EPSILON 0.00001f
-
-void Mesh::AddCube(glm::vec3 a, glm::vec3 b, Material *mat) {
+void Mesh::AddCube(glm::vec3 a, glm::vec3 b, Material mat) {
     glm::vec3 vs[8];
     vs[0] = a;
     vs[1] = glm::vec3(b.x, a.y, a.z);
@@ -43,26 +44,24 @@ void Mesh::AddCube(glm::vec3 a, glm::vec3 b, Material *mat) {
     AddTriangleWithMaterial(vs[4], vs[5], vs[1], mat);
 }
 
-void Mesh::AddTriangleWithMaterial(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, Material *m)
+void Mesh::AddTriangleWithMaterial(const glm::vec3 &v1, const glm::vec3 &v2, const glm::vec3 &v3, Material m)
 {
-    AddTriangleWithMaterial(new Triangle(v1, v2, v3), m);
+    AddTriangleWithMaterial(Triangle(v1, v2, v3), m);
 }
 
-void Mesh::AddTriangleWithMaterial(Triangle *triangle, Material *material) {
-    _triangleMaterialPairs.push_back(std::make_pair(triangle, material));
-}
 
 void Mesh::AddTriangleWithMaterial(Triangle triangle, Material material) {
     _triangles.push_back(triangle);
     _materials.push_back(material);
+    ++Diagnostics::triangleCount;
 }
 
 bool Mesh::FindFirstIntersectionInRange(const Ray &ray, float range, const Triangle **collider) const {
     float distance = FLT_MAX;
     bool currentHit = false;
     const Triangle *t = nullptr;
-    for (const auto &tmp : _triangleMaterialPairs) {
-        t = tmp.first;
+    for (size_t i = 0; i < _triangles.size(); i++) {
+        t = &_triangles[i];
         currentHit = t->CheckIntersection(ray, &distance);
         if (currentHit && distance < range && distance > EPSILON) {
             *collider = t;
@@ -77,16 +76,16 @@ void Mesh::FindIntersectionInRange(const Ray &ray, TracingResult *tracingResult,
     float closestDistance = range;
     float currentDistance = 1.0 / 0.0f;
     bool currentHit = false;
-    for (const auto &tmp : _triangleMaterialPairs) {
-        const Triangle *t = tmp.first;
-        const Material *m = tmp.second;
+    for (size_t i = 0; i < _triangles.size(); i++) {
+        const Triangle *t = &_triangles[i];
+        const Material *m = &_materials[i];
         currentHit = t->CheckIntersection(ray, &currentDistance);
         if (currentHit && currentDistance < closestDistance && currentDistance > EPSILON) {
             closestDistance = currentDistance;
             tracingResult->hit = true;
             tracingResult->distance = closestDistance;
             tracingResult->material = m;
-            tracingResult->normal = t->normal;
+            tracingResult->normal = t->GetNormal();
             tracingResult->triangle = t;
             return;
         }
@@ -106,16 +105,16 @@ void Mesh::FindIntersection(const Ray &ray, TracingResult *tracingResult) const 
     float closestDistance = 1.0f / 0.0f;
     float currentDistance = 1.0 / 0.0f;
     bool currentHit = false;
-    for (const auto &tmp : _triangleMaterialPairs) {
-        const Triangle *t = tmp.first;
-        const Material *m = tmp.second;
+    for (size_t i = 0; i < _triangles.size(); i++) {
+        const Triangle *t = &_triangles[i];
+        const Material *m = &_materials[i];
         currentHit = t->CheckIntersection(ray, &currentDistance);
         if (currentHit && currentDistance < closestDistance && currentDistance > EPSILON) {
             closestDistance = currentDistance;
             tracingResult->hit = true;
             tracingResult->distance = closestDistance;
             tracingResult->material = m;
-            tracingResult->normal = t->normal;
+            tracingResult->normal = t->GetNormal();
             tracingResult->triangle = t;
         }
     }

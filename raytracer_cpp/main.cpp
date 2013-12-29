@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 Krzysztof Gabis. All rights reserved.
 //
 // 17.08.2013 11:40 avg time for 2 triangles and 2 spheres: 0.04
-// 26.12.2013 15:05 avg time for 4 boxes: 0.55s or 3s with shadows
-
+// 26.12.2013 15:05 avg time for 4 boxes: 0.55s or 3.00s with shadows
+// 26.12.2013 16:51 avg time for 4 boxes: 0.51s or 2.80s with shadows
+// 27.12.2013 22:19 avg time for 4 boxes: 0.49s or 2.70s with shadows
+// 29.12.2013 10:36 avg time for 4 boxes: 0.47s or 2.55s with shadows
+// 29.12.2013 11:22 avg time for 4 boxes: 0.46s or 2.50s with shadows
 
 #include <SFML/Graphics.hpp>
 #include "Raytracer.h"
@@ -53,6 +56,7 @@ int main() {
     text.setCharacterSize(14);
     sprite.setTexture(texture);
     raytracer.scene.LoadDemo();
+    printf("%d\n", sizeof(Triangle));
     while (window.isOpen()) {
         clock.restart();
         screen.create(WIDTH, HEIGHT, sf::Color::White);
@@ -76,10 +80,7 @@ int main() {
         time = clock.getElapsedTime();
         printf("Seconds per frame: %f\n", time.asSeconds());
     }
-    printf("Shadow tests:\t\t%u\n", Diagnostics::shadowTests);
-    printf("Cached shadow hits:\t%u\n", Diagnostics::cachedShadowHits);
-    printf("Cached hits / tests ratio = %.3f%%\n",
-           (float)Diagnostics::cachedShadowHits / (float)Diagnostics::shadowTests * 100.0f);
+    Diagnostics::Print();
 }
 
 void handleInput(Raytracer *rt, const sf::Event &event) {

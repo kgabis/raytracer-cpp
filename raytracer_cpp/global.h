@@ -12,4 +12,6 @@
 #define WIDTH 640
 #define HEIGHT 480
 
+#define EPSILON 0.00001f
+
 #endif

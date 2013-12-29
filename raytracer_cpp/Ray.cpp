@@ -102,9 +102,9 @@ void Ray::TraceOnce(Scene &scene, TracingResult *result) const {
 bool Ray::TraceForShadow(Scene &scene, float lightDistance, const Triangle **lastOccluder) const {
     float distance = FLT_MAX;
     ++Diagnostics::shadowTests;
-    if ( lastOccluder != nullptr ) {
+    if (*lastOccluder != nullptr) {
         bool hit = (*lastOccluder)->CheckIntersection(*this, &distance);
-        if ( hit && distance < lightDistance && distance > 0.00001f) {
+        if (hit && distance < lightDistance) {
             ++Diagnostics::cachedShadowHits;
             return true;
         }

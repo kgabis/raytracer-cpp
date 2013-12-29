@@ -32,15 +32,15 @@ void setPixel(size_t x, size_t y, Color c) {
     isRendered[x][y] = true;
 }
 
-Color getPixel(size_t x, size_t y, const Ray &ray, Scene &scene) {
-    if (WIDTH < x || HEIGHT < y) {
-        return Color();
-    }
-    //float r = (float)random()/(float)RAND_MAX;
-    //if (!isRendered[x][y] && r > Raytracer::sRandTresh) {
+inline Color getPixel(size_t x, size_t y, const Ray &ray, Scene &scene) {
+//    if (WIDTH < x || HEIGHT < y) {
+//        return Color();
+//    }
+//    float r = (float)random()/(float)RAND_MAX;
+//    if (!isRendered[x][y] && r > Raytracer::sRandTresh) {
             pixels[x][y] = ray.Trace(scene);
-    //        isRendered[x][y] = true;
-    //}
+//            isRendered[x][y] = true;
+//    }
     return pixels[x][y];
 }
 
@@ -55,11 +55,17 @@ void Raytracer::Render(DrawFunction drawFunction, void *data) {
     this->scene.camera.Update();
     Color color;
     //this->scene.lights[0].position.z += 0.3f;
-    for (size_t x = 0; x < this->resolutionX; x++) {
-        for (size_t y = 0; y < this->resolutionY; y++) {
-            Ray ray(this->scene.camera, x, y);
-            color = getPixel(x, y, ray, scene);
-            drawFunction(data, color, x, y);
+    size_t blockSize = 160;
+    for (size_t x = 0; x < this->resolutionX; x+=blockSize) {
+        for (size_t y = 0; y < this->resolutionY; y+=blockSize) {
+            for (size_t blockX = 0; blockX < blockSize; blockX++) {
+                for (size_t blockY = 0; blockY < blockSize; blockY++) {
+                    Ray ray(this->scene.camera, x + blockX, y + blockY);
+                    color = getPixel(x + blockX, y + blockY, ray, scene);
+                    drawFunction(data, color, x + blockX, y + blockY);
+                }
+            }
+
         }
     }
     this->scene.test_RotateCube();

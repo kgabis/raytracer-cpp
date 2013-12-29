@@ -13,6 +13,7 @@
 Light::Light( glm::vec3 position, float intensity ) {
     this->position = position;
     this->intensity = intensity;
+    this->lastOccluder = nullptr;
 }
 
 glm::vec3 Light::GetDirectionAtPoint( glm::vec3 point ) const {

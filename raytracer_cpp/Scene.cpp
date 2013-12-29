@@ -29,10 +29,10 @@ void Scene::LoadDemo(void) {
     Material *yellowMat = new Material(Color::Yellow, 0, 0, 10);
     meshes.push_back(Mesh());
     Mesh &cube = meshes.back();
-    cube.AddCube(glm::vec3(0, 0, 0), glm::vec3(25, 25, 25), greenMat);
-    cube.AddCube(glm::vec3(-60, 0, 20), glm::vec3(-35, 30, 40), redMat);
-    cube.AddCube(glm::vec3(100, 100, 100), glm::vec3(-100, 0, -150), blueMat);
-    cube.AddCube(glm::vec3(-40, 0, -20), glm::vec3(-25, 20, 0), yellowMat);
+    cube.AddCube(glm::vec3(0, 0, 0), glm::vec3(25, 25, 25), *greenMat);
+    cube.AddCube(glm::vec3(-60, 0, 20), glm::vec3(-35, 30, 40), *redMat);
+    cube.AddCube(glm::vec3(100, 100, 100), glm::vec3(-100, 0, -150), *blueMat);
+    cube.AddCube(glm::vec3(-40, 0, -20), glm::vec3(-25, 20, 0), *yellowMat);
 //    this->lights.push_back(Light(glm::vec3(0, 40, -90), 3));
     this->lights.push_back(Light(glm::vec3(0, 10, 90), 1));
 //    this->lights.push_back(Light(glm::vec3(-200, 0, -100), 1));
