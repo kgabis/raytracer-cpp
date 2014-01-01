@@ -30,7 +30,7 @@ public:
     
     Ray();
     Ray(glm::vec3 origin, glm::vec3 direction);
-    Ray(const Camera &camera, size_t x, size_t y);
+    Ray(const Camera &camera, float x, float y);
     Color Trace(Scene &scene) const;
     void print() const;
     static bool sFogShadows;

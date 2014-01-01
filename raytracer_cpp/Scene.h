@@ -21,14 +21,16 @@ public:
     std::vector<Mesh> meshes;
     std::vector<Light> lights;
     double ambientCoefficient;
+    size_t cameraWidth;
+    size_t cameraHeight;
     Camera camera;
     Color groundColor;
     Color skyColor;
     
     Scene();
     Scene(size_t cameraWidth, size_t cameraHeight);
-    void LoadDemo(void);
-    void test_RotateCube(void);
+    void LoadCubesDemo();
+    void LoadTeapotDemo();
     ~Scene();
 };
 

@@ -21,7 +21,7 @@ public:
     glm::vec3 a;//, b, c;
     glm::vec3 edges[2];
     glm::vec3 normal;
-    char padding[14];
+//    char padding[14];
     
     Triangle() :
         Triangle(glm::vec3(0, 0, 0),
@@ -36,13 +36,10 @@ public:
         this->edges[0] = b - a;
         this->edges[1] = c - a;
         this->normal = glm::normalize(glm::cross(b - a, c - a));
+//        printf("%f %f %f, %f %f %f, %f %f %f\n", a.x, a.y, a.z, b.x, b.y, b.z, c.x, c.y, c.z);
     }
     
     inline bool CheckIntersection(const Ray &ray, float *distance) const {
-        float dir = glm::dot(ray.direction, normal);
-        if (dir <= 0.0f) {
-            return false;
-        }
         glm::vec3 pvec = glm::cross(ray.direction, edges[0]);
         float det = glm::dot(edges[1], pvec);
         glm::vec3 tvec = ray.origin - this->a;

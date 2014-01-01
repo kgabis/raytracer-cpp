@@ -11,6 +11,8 @@
 // 27.12.2013 22:19 avg time for 4 boxes: 0.49s or 2.70s with shadows
 // 29.12.2013 10:36 avg time for 4 boxes: 0.47s or 2.55s with shadows
 // 29.12.2013 11:22 avg time for 4 boxes: 0.46s or 2.50s with shadows
+// 29.12.2013 11:29 avg time for 4 boxes: 0.37s or 2.01s with shadows
+// 29.12.2013 11:29 avg time for 4 boxes: 0.34s or 2.00s with shadows
 
 #include <SFML/Graphics.hpp>
 #include "Raytracer.h"
@@ -55,8 +57,7 @@ int main() {
     text.setPosition(5, 5);
     text.setCharacterSize(14);
     sprite.setTexture(texture);
-    raytracer.scene.LoadDemo();
-    printf("%d\n", sizeof(Triangle));
+    raytracer.scene.LoadTeapotDemo();
     while (window.isOpen()) {
         clock.restart();
         screen.create(WIDTH, HEIGHT, sf::Color::White);
@@ -65,7 +66,7 @@ int main() {
                 window.close();
             } else {
                 handleInput(&raytracer, event);
-            }            
+            }
         }
         raytracer.Render(draw, &screen);
         texture.loadFromImage(screen);

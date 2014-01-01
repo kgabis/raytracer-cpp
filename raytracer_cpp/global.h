@@ -14,4 +14,9 @@
 
 #define EPSILON 0.00001f
 
+#define AA_ON 0
+#define AA_STEP 0.61
+
+#define RANDOMIZE_ON 1
+
 #endif

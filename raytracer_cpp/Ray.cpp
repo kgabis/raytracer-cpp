@@ -32,11 +32,11 @@ Ray::Ray(glm::vec3 origin, glm::vec3 direction) {
     this->direction = direction;
 }
 
-Ray::Ray(const Camera &camera, size_t x, size_t y) {
+Ray::Ray(const Camera &camera, float x, float y) {
     float dy = 1;
     float dx = 1;
-    float py = (-camera.height / 2) + dy * ((float)y + 0.5);
-    float px = (-camera.width / 2) + dx * ((float)x + 0.5);
+    float py = (-camera.height / 2) + dy * (y + 0.5);
+    float px = (-camera.width / 2) + dx * (x + 0.5);
     glm::vec3 p = camera.planeCenter + (camera.planeDirectionX * px) + (camera.planeDirectionY * py);
     glm::vec3 u_r = glm::normalize(p - camera.position);
     this->origin = camera.position;
@@ -128,6 +128,11 @@ ShadingResult Ray::ShadeAtPoint(Scene &scene, const TracingResult &tracingResult
     bool isInShadow = false;
     for (auto &light : scene.lights) {
         lightDirection = light.GetDirectionAtPoint(point);
+        float dirdot = glm::dot(lightDirection, tracingResult.normal);
+        if (dirdot < -EPSILON) {
+            continue;
+        }
+        lightDirection = glm::normalize(lightDirection);
         newRay.origin = point;
         newRay.direction = -lightDirection;
         lightDistance = glm::length(point - light.position);
@@ -161,7 +166,7 @@ float Ray::GetFogInShadowRatio(Scene &scene, float hitDistance) const {
     while (distance < hitDistance && distance < MAX_VISIBLE_DISTANCE) {
         glm::vec3 point = this->origin + this->direction * distance;
         for (auto &light : scene.lights) {
-            glm::vec3 lightDirection = light.GetDirectionAtPoint(point);
+            glm::vec3 lightDirection = light.GetNormalizedDirectionAtPoint(point);
             Ray shadowRay(point, -lightDirection);
             float lightDistance = glm::length(point - light.position);
             if (shadowRay.TraceForShadow(scene, lightDistance, &light.lastOccluder)) {

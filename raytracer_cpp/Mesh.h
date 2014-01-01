@@ -20,7 +20,8 @@ class Ray;
 
 class Mesh {
 public:
-    Mesh(void) = default;
+    Mesh();
+    void LoadFromFile(const char *filename, Material material);
     void AddCube(glm::vec3 a, glm::vec3 b, Material mat);
     void AddTriangleWithMaterial(Triangle triangle, Material material);
     void AddTriangleWithMaterial(const glm::vec3 &v1,
@@ -35,6 +36,14 @@ public:
 private:
     std::vector<Triangle> _triangles;
     std::vector<Material> _materials;
+    glm::vec3 _aabbMin;
+    glm::vec3 _aabbMax;
+    std::vector<Triangle> _aabb;
+    bool _useAABB;
+    
+    void UpdateAABB();
+    bool IntersectsAABB(const Ray &ray, float range) const;
+    bool PointInAABB(const glm::vec3 p) const;
 };
 
 #endif /* defined(__raytracer_cpp__Mesh__) */
