@@ -20,6 +20,7 @@
 		EEF7B465173555EF0031317F /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B463173555EF0031317F /* Camera.cpp */; };
 		EEF7B46E173556110031317F /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46C173556110031317F /* Material.cpp */; };
 		EEF7B471173556160031317F /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46F173556160031317F /* Light.cpp */; };
+		EEF950891874D19A004B75F1 /* AABB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF950871874D19A004B75F1 /* AABB.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +64,8 @@
 		EEF7B46D173556110031317F /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
 		EEF7B46F173556160031317F /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
 		EEF7B470173556160031317F /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
+		EEF950871874D19A004B75F1 /* AABB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AABB.cpp; sourceTree = "<group>"; };
+		EEF950881874D19A004B75F1 /* AABB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AABB.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,7 @@
 		EEAB9DE817BE176B00F6B258 /* Header */ = {
 			isa = PBXGroup;
 			children = (
+				EEF950881874D19A004B75F1 /* AABB.h */,
 				EE9B68B117C11BE3004347CE /* TracingResult.h */,
 				EE9B68AF17BFAC81004347CE /* Mesh.h */,
 				EE9B68A917BF7CBC004347CE /* Sphere.h */,
@@ -126,6 +130,7 @@
 		EEAB9DEA17BE179200F6B258 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				EEF950871874D19A004B75F1 /* AABB.cpp */,
 				EE33783A1869DE8100547F86 /* Diagnostics.cpp */,
 				EE8B0742172D94EE00CCE082 /* main.cpp */,
 				EEF7B46C173556110031317F /* Material.cpp */,
@@ -195,6 +200,7 @@
 				EE33783C1869DE8100547F86 /* Diagnostics.cpp in Sources */,
 				EE0D67CB17EADBD60069F14D /* Raytracer.cpp in Sources */,
 				EE8B0743172D94EE00CCE082 /* main.cpp in Sources */,
+				EEF950891874D19A004B75F1 /* AABB.cpp in Sources */,
 				EED7199B172ECA7B00361A3B /* Ray.cpp in Sources */,
 				EED7199E172ECB4F00361A3B /* Color.cpp in Sources */,
 				EEDF082B17351E8B009A22BB /* (null) in Sources */,

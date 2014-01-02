@@ -14,6 +14,7 @@
 
 #include "Triangle.h"
 #include "Material.h"
+#include "AABB.h"
 
 class TracingResult;
 class Ray;
@@ -36,14 +37,9 @@ public:
 private:
     std::vector<Triangle> _triangles;
     std::vector<Material> _materials;
-    glm::vec3 _aabbMin;
-    glm::vec3 _aabbMax;
-    std::vector<Triangle> _aabb;
+
+    AABB _aabb;
     bool _useAABB;
-    
-    void UpdateAABB();
-    bool IntersectsAABB(const Ray &ray, float range) const;
-    bool PointInAABB(const glm::vec3 p) const;
 };
 
 #endif /* defined(__raytracer_cpp__Mesh__) */
