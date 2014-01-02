@@ -17,12 +17,13 @@
 class AABB {
 public:
     AABB();
+    void MakeBoundingVolume(glm::vec3 a, glm::vec3 b);
     void Update(const std::vector<Triangle> &triangles);
     bool Intersects(const Ray &ray, float range) const;
 private:
     glm::vec3 _min;
     glm::vec3 _max;
-    std::vector<Triangle> _triangles;
+    Triangle _triangles[12];
     
     bool ContainsPoint(const glm::vec3 p) const;
 };

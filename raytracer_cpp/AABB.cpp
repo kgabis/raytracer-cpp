@@ -23,7 +23,7 @@ bool AABB::Intersects(const Ray &ray, float range) const {
     return false;
 }
 
-std::vector<Triangle> MakeAABB(glm::vec3 a, glm::vec3 b) {
+void AABB::MakeBoundingVolume(glm::vec3 a, glm::vec3 b) {
     glm::vec3 vs[8];
     vs[0] = a;
     vs[1] = glm::vec3(b.x, a.y, a.z);
@@ -34,26 +34,23 @@ std::vector<Triangle> MakeAABB(glm::vec3 a, glm::vec3 b) {
     vs[6] = b;
     vs[7] = glm::vec3(a.x, b.y, b.z);
     
-    std::vector<Triangle> result;
-    result.push_back(Triangle(vs[0], vs[1], vs[3]));
-    result.push_back(Triangle(vs[1], vs[2], vs[3]));
+    _triangles[0] = Triangle(vs[0], vs[1], vs[3]);
+    _triangles[1] = Triangle(vs[1], vs[2], vs[3]);
     
-    result.push_back(Triangle(vs[1], vs[5], vs[2]));
-    result.push_back(Triangle(vs[5], vs[6], vs[2]));
+    _triangles[2] = Triangle(vs[1], vs[5], vs[2]);
+    _triangles[3] = Triangle(vs[5], vs[6], vs[2]);
     
-    result.push_back(Triangle(vs[3], vs[2], vs[7]));
-    result.push_back(Triangle(vs[2], vs[6], vs[7]));
+    _triangles[4] = Triangle(vs[3], vs[2], vs[7]);
+    _triangles[5] = Triangle(vs[2], vs[6], vs[7]);
     
-    result.push_back(Triangle(vs[4], vs[7], vs[5]));
-    result.push_back(Triangle(vs[5], vs[7], vs[6]));
+    _triangles[6] = Triangle(vs[4], vs[7], vs[5]);
+    _triangles[7] = Triangle(vs[5], vs[7], vs[6]);
     
-    result.push_back(Triangle(vs[0], vs[3], vs[4]));
-    result.push_back(Triangle(vs[4], vs[3], vs[7]));
+    _triangles[8] = Triangle(vs[0], vs[3], vs[4]);
+    _triangles[9] = Triangle(vs[4], vs[3], vs[7]);
     
-    result.push_back(Triangle(vs[0], vs[4], vs[1]));
-    result.push_back(Triangle(vs[4], vs[5], vs[1]));
-    
-    return result;
+    _triangles[10] = Triangle(vs[0], vs[4], vs[1]);
+    _triangles[11] = Triangle(vs[4], vs[5], vs[1]);
 }
 
 void AABB::Update(const std::vector<Triangle> &triangles) {
@@ -84,7 +81,7 @@ void AABB::Update(const std::vector<Triangle> &triangles) {
     max += eps;
     _min = min;
     _max = max;
-    _triangles = MakeAABB(min, max);
+    MakeBoundingVolume(min, max);
 }
 
 bool AABB::ContainsPoint(const glm::vec3 p) const {
