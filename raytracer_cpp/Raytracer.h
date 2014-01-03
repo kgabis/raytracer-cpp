@@ -24,6 +24,7 @@ public:
     size_t resolutionX;
     size_t resolutionY;
     static float sRandTresh;
+    static bool sFogShadows;
     
     Raytracer( size_t resolutionX, size_t resolutionY );    
     void Render( DrawFunction drawFunction, void *data );

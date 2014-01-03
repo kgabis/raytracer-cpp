@@ -13,6 +13,7 @@
 #include "Diagnostics.h"
 
 #include <glm/gtx/rotate_vector.hpp>
+#include <string.h>
 
 enum FileStatus {
     FSHeader,

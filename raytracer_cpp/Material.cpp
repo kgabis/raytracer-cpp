@@ -8,7 +8,7 @@
 
 #include "Material.h"
 
-Material::Material() : Material( Color::White, 0.0f, 0.0f, 0.0f ) { }
+Material::Material() : Material(Color::White, 0.0f, 0.0f, 0.0f) { }
 
 Material::Material(Color color, float reflectivity, float reflectionNoise, float specularity) {
     this->color = color;

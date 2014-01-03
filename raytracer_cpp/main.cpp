@@ -100,8 +100,8 @@ void handleInput(Raytracer *rt, const sf::Event &event) {
     HANDLE_CAM(Right, lookRight)    
 #undef HANDLE_CAM
 #define HANDLE_KEY(pressedKey, handler) if(event.key.code == sf::Keyboard::pressedKey){ rt->needsUpdate(true); handler; }
-    HANDLE_KEY(T, Ray::sFogShadows = true)
-    HANDLE_KEY(Y, Ray::sFogShadows = false)
+    HANDLE_KEY(T, Raytracer::sFogShadows = true)
+    HANDLE_KEY(Y, Raytracer::sFogShadows = false)
     HANDLE_KEY(G, Raytracer::sRandTresh *= 0.95)
     HANDLE_KEY(H, Raytracer::sRandTresh *= 1.05)
     
