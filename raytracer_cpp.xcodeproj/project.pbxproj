@@ -17,6 +17,8 @@
 		EED7199E172ECB4F00361A3B /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EED7199C172ECB4F00361A3B /* Color.cpp */; };
 		EEDF082B17351E8B009A22BB /* (null) in Sources */ = {isa = PBXBuildFile; };
 		EEDF082E17353915009A22BB /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEDF082C17353915009A22BB /* Scene.cpp */; };
+		EEE74EFC1879C11700FF2B5E /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE74EFB1879C11700FF2B5E /* GLUT.framework */; };
+		EEE74EFE1879C11C00FF2B5E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEE74EFD1879C11C00FF2B5E /* OpenGL.framework */; };
 		EEF7B465173555EF0031317F /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B463173555EF0031317F /* Camera.cpp */; };
 		EEF7B46E173556110031317F /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46C173556110031317F /* Material.cpp */; };
 		EEF7B471173556160031317F /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEF7B46F173556160031317F /* Light.cpp */; };
@@ -57,6 +59,8 @@
 		EEDF082A17351E8B009A22BB /* Raytracer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raytracer.h; sourceTree = "<group>"; };
 		EEDF082C17353915009A22BB /* Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene.cpp; sourceTree = "<group>"; };
 		EEDF082D17353915009A22BB /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		EEE74EFB1879C11700FF2B5E /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		EEE74EFD1879C11C00FF2B5E /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		EEF7B463173555EF0031317F /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		EEF7B464173555EF0031317F /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		EEF7B46A1735560C0031317F /* Surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surface.h; sourceTree = "<group>"; };
@@ -73,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEE74EFE1879C11C00FF2B5E /* OpenGL.framework in Frameworks */,
+				EEE74EFC1879C11700FF2B5E /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +88,8 @@
 		EE8B0736172D94EE00CCE082 = {
 			isa = PBXGroup;
 			children = (
+				EEE74EFD1879C11C00FF2B5E /* OpenGL.framework */,
+				EEE74EFB1879C11700FF2B5E /* GLUT.framework */,
 				EE8B0741172D94EE00CCE082 /* raytracer_cpp */,
 				EE8B0740172D94EE00CCE082 /* Products */,
 			);
@@ -299,18 +307,14 @@
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GCC_WARN_PEDANTIC = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include;
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = "";
 				LLVM_LTO = YES;
 				LLVM_VECTORIZE_LOOPS = NO;
 				OTHER_CFLAGS = (
 					"-ftree-vectorize",
 					"-ftree-vectorizer-verbose=6",
 				);
-				OTHER_LDFLAGS = (
-					"-lsfml-graphics",
-					"-lsfml-system",
-					"-lsfml-window",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -332,18 +336,14 @@
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GCC_WARN_PEDANTIC = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include;
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = "";
 				LLVM_LTO = YES;
 				LLVM_VECTORIZE_LOOPS = NO;
 				OTHER_CFLAGS = (
 					"-ftree-vectorize",
 					"-ftree-vectorizer-verbose=6",
 				);
-				OTHER_LDFLAGS = (
-					"-lsfml-graphics",
-					"-lsfml-system",
-					"-lsfml-window",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

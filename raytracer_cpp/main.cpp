@@ -14,103 +14,130 @@
 // 29.12.2013 11:29 avg time for 4 boxes: 0.37s or 2.01s with shadows
 // 29.12.2013 11:29 avg time for 4 boxes: 0.34s or 2.00s with shadows
 
-#include <SFML/Graphics.hpp>
+#ifdef __APPLE__
+#include <GLUT/glut.h>          /* Open GL Util    APPLE */
+#else
+#include <GL/glut.h>            /* Open GL Util    OpenGL*/
+#endif
+
+#include <stdio.h>
+#include <string.h>
+#include <glm/ext.hpp>
+#include <stdlib.h>
+
 #include "Raytracer.h"
 #include "Color.h"
 #include "Ray.h"
 #include "Diagnostics.h"
-//#include <SFML/Graphics/Sprite.h>
-#include <stdio.h>
-#include <iostream>
-#include <string.h>
-#include <glm/ext.hpp>
-
 #include "global.h"
 
-void handleInput(Raytracer *rt, const sf::Event &event);
+void drawHandler(void);
+void keyboardHandler(unsigned char key, int x, int y);
+void arrowsHandler(int key, int x, int y);
+void glInit(void);
+void closeRaytracer(int code);
+
+static char gBuffer[WIDTH * HEIGHT * 3];
+static Raytracer gRaytracer(WIDTH, HEIGHT);
+
+int main(int argc, char **argv) {
+    srand((unsigned int)time(NULL));
+    gRaytracer.scene.LoadTeapotDemo();
+
+    glutInitWindowSize(WIDTH, HEIGHT);
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+    glutCreateWindow("Raytracer (C++ edition) - Author: Krzysztof Gabis (kgabis@gmail.com)");
+    
+    glInit();
+    glutDisplayFunc(drawHandler);
+    glutSpecialFunc(arrowsHandler);
+    glutKeyboardFunc(keyboardHandler);
+    
+    glutMainLoop();
+    return 1;
+}
+
+void setPixel(char *buffer, int x, int y, int r, int g, int b) {
+    y = HEIGHT - y - 1; // upside-down hack
+    buffer[(y * WIDTH + x) * 3 + 0] = r;
+    buffer[(y * WIDTH + x) * 3 + 1] = g;
+    buffer[(y * WIDTH + x) * 3 + 2] = b;
+    
+}
 
 void draw(void *data, Color color, size_t x, size_t y) {
-    sf::Image *screen = (sf::Image*)data;
-    sf::Color sfcolor;
-    sfcolor.r = (sf::Uint8)(color.r * 255.0);
-    sfcolor.g = (sf::Uint8)(color.g * 255.0);
-    sfcolor.b = (sf::Uint8)(color.b * 255.0);
-    sfcolor.a = 255;
-    screen->setPixel((unsigned int)x, (unsigned int)y, sfcolor);
+    char *buf = (char*)data;
+    int r = (int)(color.r * 255.0);
+    int g = (int)(color.g * 255.0);
+    int b = (int)(color.b * 255.0);
+    setPixel(buf, x, y, r, g, b);
 }
 
-int main() {
-    srand((unsigned int)time(NULL));
-    Raytracer raytracer(WIDTH, HEIGHT);
-    sf::VideoMode mode(WIDTH, HEIGHT, 32);
-    sf::IntRect bounds(0, 0, WIDTH, HEIGHT);
-    sf::RenderWindow window(mode, "RayTracerCxx");
-    sf::Event event;
-    sf::Image screen;
-    screen.create(WIDTH, HEIGHT, sf::Color::White);
-    sf::Sprite sprite;
-    sf::Texture texture;
-    texture.loadFromImage(screen);
-    sf::Clock clock;
-    sf::Time time;
-    sf::Text text;
-    text.setPosition(5, 5);
-    text.setCharacterSize(14);
-    sprite.setTexture(texture);
-    raytracer.scene.LoadTeapotDemo();
-    while (window.isOpen()) {
-        clock.restart();
-        screen.create(WIDTH, HEIGHT, sf::Color::White);
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            } else {
-                handleInput(&raytracer, event);
-            }
-        }
-        raytracer.Render(draw, &screen);
-        texture.loadFromImage(screen);
-        texture.setSmooth(true);
-        window.clear(sf::Color::White);
-        
-        texture.bind();
-        window.draw(sprite);
-        window.draw(text);
-        window.display();
-        
-        time = clock.getElapsedTime();
-        printf("Seconds per frame: %f\n", time.asSeconds());
-    }
-    Diagnostics::Print();
+void drawHandler(void) {
+    int timeBeforeRender = glutGet(GLUT_ELAPSED_TIME);
+    gRaytracer.Render(draw, gBuffer);
+    int timeAfterRender = glutGet(GLUT_ELAPSED_TIME);
+    printf("Seconds per frame: %.3f\n", (float)(timeAfterRender - timeBeforeRender) / 1000.0f);
+    glDrawPixels(WIDTH, HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, gBuffer);
+    glutSwapBuffers();
+    glutPostRedisplay();
 }
 
-void handleInput(Raytracer *rt, const sf::Event &event) {
-    Camera *cam = &rt->scene.camera;
+#define HANDLE_CAM(pressedKey, fun) if(key == (int)pressedKey){ gRaytracer.needsUpdate(true); cam->fun(moveSpeed); }
+#define HANDLE_KEY(pressedKey, handler) if(key == (int)pressedKey){ gRaytracer.needsUpdate(true); handler; }
+
+void keyboardHandler(unsigned char key, int x, int y) {
+    Camera *cam = &gRaytracer.scene.camera;
     const float moveSpeed = 1;
-#define HANDLE_CAM(pressedKey, fun) if(event.key.code == sf::Keyboard::pressedKey){ rt->needsUpdate(true);cam->fun(moveSpeed); }
-    HANDLE_CAM(W, moveForward)
-    HANDLE_CAM(S, moveBackwards)
-    HANDLE_CAM(A, moveLeft)
-    HANDLE_CAM(D, moveRight)
-    HANDLE_CAM(Q, moveUp)
-    HANDLE_CAM(E, moveDown)
-    HANDLE_CAM(Up, lookUp)
-    HANDLE_CAM(Down, lookDown)
-    HANDLE_CAM(Left, lookLeft)
-    HANDLE_CAM(Right, lookRight)    
-#undef HANDLE_CAM
-#define HANDLE_KEY(pressedKey, handler) if(event.key.code == sf::Keyboard::pressedKey){ rt->needsUpdate(true); handler; }
-    HANDLE_KEY(T, Raytracer::sFogShadows = true)
-    HANDLE_KEY(Y, Raytracer::sFogShadows = false)
-    HANDLE_KEY(G, Raytracer::sRandTresh *= 0.95)
-    HANDLE_KEY(H, Raytracer::sRandTresh *= 1.05)
     
-    HANDLE_KEY(J, rt->scene.lights[0].position.x -= moveSpeed)
-    HANDLE_KEY(L, rt->scene.lights[0].position.x += moveSpeed)
-    HANDLE_KEY(K, rt->scene.lights[0].position.z -= moveSpeed)
-    HANDLE_KEY(I, rt->scene.lights[0].position.z += moveSpeed)
-    HANDLE_KEY(U, rt->scene.lights[0].position.y += moveSpeed)
-    HANDLE_KEY(O, rt->scene.lights[0].position.y -= moveSpeed)
+    HANDLE_CAM('w', moveForward)
+    HANDLE_CAM('s', moveBackwards)
+    HANDLE_CAM('a', moveLeft)
+    HANDLE_CAM('d', moveRight)
+    HANDLE_CAM('q', moveUp)
+    HANDLE_CAM('e', moveDown)
+    
+    HANDLE_KEY('t', Raytracer::sFogShadows = true)
+    HANDLE_KEY('y', Raytracer::sFogShadows = false)
+    HANDLE_KEY('g', Raytracer::sRandTresh *= 0.95)
+    HANDLE_KEY('h', Raytracer::sRandTresh *= 1.05)
+    
+    HANDLE_KEY('j', gRaytracer.scene.lights[0].position.x -= moveSpeed)
+    HANDLE_KEY('l', gRaytracer.scene.lights[0].position.x += moveSpeed)
+    HANDLE_KEY('k', gRaytracer.scene.lights[0].position.z -= moveSpeed)
+    HANDLE_KEY('i', gRaytracer.scene.lights[0].position.z += moveSpeed)
+    HANDLE_KEY('u', gRaytracer.scene.lights[0].position.y += moveSpeed)
+    HANDLE_KEY('o', gRaytracer.scene.lights[0].position.y -= moveSpeed)
+    HANDLE_KEY(27, closeRaytracer(0)); // ESC
+}
+
+void arrowsHandler(int key, int x, int y) {
+    Camera *cam = &gRaytracer.scene.camera;
+    const float moveSpeed = 1;
+    
+    HANDLE_CAM(GLUT_KEY_UP, lookUp)
+    HANDLE_CAM(GLUT_KEY_DOWN, lookDown)
+    HANDLE_CAM(GLUT_KEY_LEFT, lookLeft)
+    HANDLE_CAM(GLUT_KEY_RIGHT, lookRight)
+}
 
 #undef HANDLE_KEY
+#undef HANDLE_CAM
+
+void glInit() {
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
+
+void closeRaytracer(int code) {
+    Diagnostics::Print();
+    exit(code);
+}
+
