@@ -44,7 +44,7 @@ void Scene::LoadTeapotDemo() {
     this->camera = Camera(glm::vec3(2, 2, -10), glm::vec3(0, 0, 1),
                           430, cameraWidth, cameraHeight);
     Material *blueMat = new Material(Color::Blue, 0, 0, 20);
-    Material *yellowMat = new Material(Color::Yellow, 0.6, 0, 10);
+    Material *yellowMat = new Material(Color::Yellow, 0.0, 0, 10);
     meshes.push_back(Mesh());
     Mesh &cube = meshes.back();
     cube.AddCube(glm::vec3(100, 100, 100), glm::vec3(-100, 0, -150), *blueMat);

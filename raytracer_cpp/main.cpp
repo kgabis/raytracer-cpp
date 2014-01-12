@@ -31,6 +31,8 @@
 #include "Diagnostics.h"
 #include "global.h"
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 void drawHandler(void);
 void keyboardHandler(unsigned char key, int x, int y);
 void arrowsHandler(int key, int x, int y);

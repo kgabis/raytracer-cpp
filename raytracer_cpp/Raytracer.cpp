@@ -84,11 +84,11 @@ void TraceOnce(const Ray &ray, Scene &scene, TracingResult *result) {
 
 bool TraceForShadow(const Ray &ray, Scene &scene, float lightDistance, const Triangle **lastOccluder) {
     float distance = FLT_MAX;
-    ++Diagnostics::shadowTests;
+    //++Diagnostics::shadowTests;
     if (*lastOccluder != nullptr) {
         bool hit = (*lastOccluder)->CheckIntersection(ray, &distance);
         if (hit && distance < lightDistance) {
-            ++Diagnostics::cachedShadowHits;
+	  //++Diagnostics::cachedShadowHits;
             return true;
         }
     }
@@ -96,7 +96,7 @@ bool TraceForShadow(const Ray &ray, Scene &scene, float lightDistance, const Tri
     for (const auto &m : scene.meshes) {
         bool hit = m.FindFirstIntersectionInRange(ray, lightDistance, &t);
         if (hit) {
-            *lastOccluder = t;
+	  //*lastOccluder = t;
             return true;
         }
     }
@@ -211,6 +211,7 @@ void Raytracer::Render(DrawFunction drawFunction, void *data) {
     this->scene.camera.Update();
     Color color;
     size_t blockSize = 8;
+    #pragma omp parallel for
     for (size_t x = 0; x < this->resolutionX; x+=blockSize) {
         for (size_t y = 0; y < this->resolutionY; y+=blockSize) {
             for (size_t blockX = 0; blockX < blockSize; blockX++) {
