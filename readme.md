@@ -14,6 +14,9 @@ SFML 2.0
 ![first](screens/1.png)
 ![second](screens/2.png)
 ![third](screens/3.png)
+![fourth](screens/4.png)
+![fifth](screens/5.png)
+
 
 ##License
 [The MIT License (MIT)](http://opensource.org/licenses/mit-license.php)

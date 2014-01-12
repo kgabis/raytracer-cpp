@@ -43,9 +43,16 @@ static char gBuffer[WIDTH * HEIGHT * 3];
 static Raytracer gRaytracer(WIDTH, HEIGHT);
 
 int main(int argc, char **argv) {
-    srand((unsigned int)time(NULL));
-    gRaytracer.scene.LoadTeapotDemo();
-
+  srand((unsigned int)time(NULL));
+  if (argc > 1) {
+    if (strcmp(argv[1], "scene=cubes") == 0) {
+      gRaytracer.scene.LoadCubesDemo();
+    } else if (strcmp(argv[1], "scene=teapot") == 0) {
+      gRaytracer.scene.LoadTeapotDemo();
+    } else {
+      gRaytracer.scene.LoadCubesDemo();
+    }
+  }
     glutInitWindowSize(WIDTH, HEIGHT);
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
@@ -58,25 +65,25 @@ int main(int argc, char **argv) {
     
     glutMainLoop();
     return 1;
-}
+  }
 
-void setPixel(char *buffer, int x, int y, int r, int g, int b) {
+  void setPixel(char *buffer, int x, int y, int r, int g, int b) {
     y = HEIGHT - y - 1; // upside-down hack
     buffer[(y * WIDTH + x) * 3 + 0] = r;
     buffer[(y * WIDTH + x) * 3 + 1] = g;
     buffer[(y * WIDTH + x) * 3 + 2] = b;
     
-}
+  }
 
-void draw(void *data, Color color, size_t x, size_t y) {
+  void draw(void *data, Color color, size_t x, size_t y) {
     char *buf = (char*)data;
     int r = (int)(color.r * 255.0);
     int g = (int)(color.g * 255.0);
     int b = (int)(color.b * 255.0);
     setPixel(buf, x, y, r, g, b);
-}
+  }
 
-void drawHandler(void) {
+  void drawHandler(void) {
     int timeBeforeRender = glutGet(GLUT_ELAPSED_TIME);
     gRaytracer.Render(draw, gBuffer);
     int timeAfterRender = glutGet(GLUT_ELAPSED_TIME);
@@ -84,50 +91,50 @@ void drawHandler(void) {
     glDrawPixels(WIDTH, HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, gBuffer);
     glutSwapBuffers();
     glutPostRedisplay();
-}
+  }
 
 #define HANDLE_CAM(pressedKey, fun) if(key == (int)pressedKey){ gRaytracer.needsUpdate(true); cam->fun(moveSpeed); }
 #define HANDLE_KEY(pressedKey, handler) if(key == (int)pressedKey){ gRaytracer.needsUpdate(true); handler; }
 
-void keyboardHandler(unsigned char key, int x, int y) {
+  void keyboardHandler(unsigned char key, int x, int y) {
     Camera *cam = &gRaytracer.scene.camera;
     const float moveSpeed = 1;
     
     HANDLE_CAM('w', moveForward)
-    HANDLE_CAM('s', moveBackwards)
-    HANDLE_CAM('a', moveLeft)
-    HANDLE_CAM('d', moveRight)
-    HANDLE_CAM('q', moveUp)
-    HANDLE_CAM('e', moveDown)
+      HANDLE_CAM('s', moveBackwards)
+      HANDLE_CAM('a', moveLeft)
+      HANDLE_CAM('d', moveRight)
+      HANDLE_CAM('q', moveUp)
+      HANDLE_CAM('e', moveDown)
     
-    HANDLE_KEY('t', Raytracer::sFogShadows = true)
-    HANDLE_KEY('y', Raytracer::sFogShadows = false)
-    HANDLE_KEY('g', Raytracer::sRandTresh *= 0.95)
-    HANDLE_KEY('h', Raytracer::sRandTresh *= 1.05)
+      HANDLE_KEY('t', Raytracer::sFogShadows = true)
+      HANDLE_KEY('y', Raytracer::sFogShadows = false)
+      HANDLE_KEY('g', Raytracer::sRandTresh *= 0.95)
+      HANDLE_KEY('h', Raytracer::sRandTresh *= 1.05)
     
-    HANDLE_KEY('j', gRaytracer.scene.lights[0].position.x -= moveSpeed)
-    HANDLE_KEY('l', gRaytracer.scene.lights[0].position.x += moveSpeed)
-    HANDLE_KEY('k', gRaytracer.scene.lights[0].position.z -= moveSpeed)
-    HANDLE_KEY('i', gRaytracer.scene.lights[0].position.z += moveSpeed)
-    HANDLE_KEY('u', gRaytracer.scene.lights[0].position.y += moveSpeed)
-    HANDLE_KEY('o', gRaytracer.scene.lights[0].position.y -= moveSpeed)
-    HANDLE_KEY(27, closeRaytracer(0)); // ESC
-}
+      HANDLE_KEY('j', gRaytracer.scene.lights[0].position.x -= moveSpeed)
+      HANDLE_KEY('l', gRaytracer.scene.lights[0].position.x += moveSpeed)
+      HANDLE_KEY('k', gRaytracer.scene.lights[0].position.z -= moveSpeed)
+      HANDLE_KEY('i', gRaytracer.scene.lights[0].position.z += moveSpeed)
+      HANDLE_KEY('u', gRaytracer.scene.lights[0].position.y += moveSpeed)
+      HANDLE_KEY('o', gRaytracer.scene.lights[0].position.y -= moveSpeed)
+      HANDLE_KEY(27, closeRaytracer(0)); // ESC
+  }
 
-void arrowsHandler(int key, int x, int y) {
+  void arrowsHandler(int key, int x, int y) {
     Camera *cam = &gRaytracer.scene.camera;
     const float moveSpeed = 1;
     
     HANDLE_CAM(GLUT_KEY_UP, lookUp)
-    HANDLE_CAM(GLUT_KEY_DOWN, lookDown)
-    HANDLE_CAM(GLUT_KEY_LEFT, lookLeft)
-    HANDLE_CAM(GLUT_KEY_RIGHT, lookRight)
-}
+      HANDLE_CAM(GLUT_KEY_DOWN, lookDown)
+      HANDLE_CAM(GLUT_KEY_LEFT, lookLeft)
+      HANDLE_CAM(GLUT_KEY_RIGHT, lookRight)
+      }
 
 #undef HANDLE_KEY
 #undef HANDLE_CAM
 
-void glInit() {
+  void glInit() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     
@@ -136,10 +143,10 @@ void glInit() {
     
     glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
-}
+  }
 
-void closeRaytracer(int code) {
+  void closeRaytracer(int code) {
     Diagnostics::Print();
     exit(code);
-}
+  }
 
