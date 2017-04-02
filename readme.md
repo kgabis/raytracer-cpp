@@ -1,16 +1,16 @@
-##About
+## About
 Raytracer in c++. Unfinished, unpolished and messy but nevertheless here it is.
 
-##Controls:
+## Controls:
 WASDQE, arrows - camera controls  
 IJKLUO - light controls  
 T/Y - Volumetric shadows on/off  
 F/G - Random rendering tresh +/-  
 
-##Dependencies
+## Dependencies
 [GLM](http://glm.g-truc.net/0.9.5/index.html)
 
-##Screens
+## Screens
 ![first](screens/1.png)
 ![second](screens/2.png)
 ![third](screens/3.png)
@@ -18,5 +18,5 @@ F/G - Random rendering tresh +/-
 ![fifth](screens/5.png)
 
 
-##License
+## License
 [The MIT License (MIT)](http://opensource.org/licenses/mit-license.php)
